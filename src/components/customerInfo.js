@@ -4,7 +4,13 @@ import './css/user.css'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Loading from './isLoading'
+import {
 
+  Stack,
+Box,
+Button,
+  
+} from '@chakra-ui/react'
 
 const CustomersInfo = () => {
     const {accessToken} = useAuth()
@@ -46,23 +52,41 @@ const CustomersInfo = () => {
     }, [accessToken])
 
   return (  isLoading?(<Loading/>):(
-    authenticated &&( <>
-     <div className="user-profile-list">
-      {customerDetail.map((user) => (
-        <div className="user-profile-card" key={user.id}>
-          {/* <img src={user.avatar} alt={`${user.name}'s avatar`} className="user-avatar" /> */}
-          <div className="user-info">
-            <h3 className="user-name">Name: {user.full_name}</h3>
-            <p className="user-email">Email: {user.email}</p>
-            <p className="user-location">Address: {user.address}</p>
-            <p className="user-location">Mobile No: {user.mobile_no}</p>
-          </div>
-          <Link className="edit-button-customer" to={`/customer/${user.id}/update`}> <p className="bi bi-pencil">Update Customer</p> </Link>
-        </div>
-      ))}
-    </div> 
+    authenticated &&(
+     <Box >
+  {customerDetail.map((user, index) => (
+    <Stack
+    boxShadow={'md'}
+    mt={5}
+   mx={'auto'}
+      maxW={'1000px'}
+      key={user.id}
+      direction={{ base: 'column', md: 'row' }}
+      spacing="2"
+      borderBottom="1px solid #ccc"
+      p="2"
+    >
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Full Name:</strong> {user.full_name}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Email:</strong> {user.email}
+      </Box>    
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Mobile No:</strong> {user.mobile_no}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Address:</strong> {user.address}
+      </Box>
     
-    </>)
+      <Box> <Button as={Link} className="edit-button-customer" to={`/supplier/${user.id}/update`} >Update</Button>  </Box>
+      
+    </Stack>
+  ))} 
+          
+</Box>
+    
+   )
       )
     
     

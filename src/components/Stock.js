@@ -4,6 +4,14 @@ import { useAuth } from '../context/AuthContext'
 import Loading from './isLoading';
 import axiosInstance from '../utils/axiosInstance';
 import { Link } from 'react-router-dom';
+import {
+
+  
+  Stack,
+Box,
+Button,
+  Flex,
+} from '@chakra-ui/react'
 
 const StockList = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -69,36 +77,45 @@ const StockList = () => {
 
       {isLoading? (<Loading/>):(
         (authenticated && (
-          <div className="container">
-      <table>
-          <thead>
-              
-              <tr>
-                  <th>Product Name</th>
-                  <th> Available Qty </th>
-                 
-              </tr>
-              </thead>
-  
-              {stockDetails.map((stock, index) => (
-                  <tbody key={index}>
-                      <tr>
-                          <td> {stock.product.name} </td>
-                          <td> {stock.quantity} </td>
-                          <td> <Link  className='edit-button' to={`/stock/${stock.id}/update`}> <p className="bi bi-pencil">Update</p> </Link></td>
-                         
-                       
-                      </tr>
-                  </tbody>
-              ))}
-        
-      </table>
-      <div className="pagination">
-            {hasPrevPage && <button onClick={handlePrevPage}>Previous</button>}
-            <span className='page-number'> Page&nbsp;{currentPage}</span>
-            {hasNextPage && <button onClick={handleNextPage}>Next</button>}
-          </div>
-      </div>
+      
+      <Box   >
+  {stockDetails.map((stock, index) => (
+    <Stack
+    mt={5}
+   mx={'auto'}
+      maxW={'1000px'}
+      key={stock.id}
+      direction={{ base: 'column', md: 'row' }}
+      spacing="2"
+      borderBottom="1px solid #ccc"
+      p="2"
+    >
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Product Name:</strong> {stock.product.name}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Quantity:</strong> {stock.quantity}
+      </Box>    
+      <Box> <Button as={Link} to={`/stock/${stock.id}/update`} className="bi bi-pencil-square update-icon">Update</Button>  </Box>
+      
+    </Stack>
+  ))} 
+           <Flex align="center" justify="center" mt={4} w="100%">
+    {hasPrevPage && (
+      <Button onClick={handlePrevPage} mr={2}>
+        Previous
+      </Button>
+    )}
+    <Box  mx={2}>
+      Page&nbsp;{currentPage}
+    </Box>
+    {hasNextPage && (
+      <Button onClick={handleNextPage} ml={2}>
+        Next
+      </Button>
+    )}
+  </Flex>
+</Box>
         ))
       )}
       

@@ -4,6 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import Loading from './isLoading';
 import axiosInstance from '../utils/axiosInstance'
 import { Link } from 'react-router-dom';
+import {
+
+  Badge,
+  Stack,
+Box,
+Button,
+  Flex,
+} from '@chakra-ui/react'
 
 const OrderItemList = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -65,47 +73,58 @@ const OrderItemList = () => {
   return (
     <div>
       {isLoading? (<Loading/>):(
-        (authenticated && 
-          (<div className="order-container">
-           <table>
-                 <thead>
-                   
-                     <tr>
-                         <th>Product Name</th>
-                         <th> Quantity</th>
-                         <th> Price </th>
-                         <th>Total Price </th>
-                         <th>Customer Name</th>
-                         <th>Order Status</th>
-                     </tr>
-                     
-                    
-                    
-                     </thead>
-         
-                     {orderDetails.map((order, index) => (
-                         <tbody key={index}>
-                             <tr>
-                                 <td> {order.product.name} </td>
-                                 <td> {order.quantity} </td>
-                                 <td> {order.price} </td>
-                                 <td> {order.quantity*order.price} </td>
-                                 <td> {order.order.customer.full_name} </td>
-                                 <td> {order.order.order_status} </td>
-                                 <td> <Link  to={`/order/${order.id}/update`}> <button className="bi bi-pencil-square update-icon">Update</button> </Link> </td>
-                             </tr>
-                             
-                          
-                         </tbody>
-                     ))}
-               
-             </table>
-             <div className="pagination">
-                   {hasPrevPage && <button onClick={handlePrevPage}>Previous</button>}
-                   <span className='page-number'> Page&nbsp;{currentPage}</span>
-                   {hasNextPage && <button onClick={handleNextPage}>Next</button>}
-                 </div>
-             </div>))
+        (authenticated && <Box   >
+  {orderDetails.map((order, index) => (
+    <Stack
+    mt={5}
+   mx={'auto'}
+      maxW={'1000px'}
+      key={order.id}
+      direction={{ base: 'column', md: 'row' }}
+      spacing="2"
+      borderBottom="1px solid #ccc"
+      p="2"
+    >
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Product Name:</strong> {order.product.name}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Quantity:</strong> {order.quantity}
+      </Box>    
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Price:</strong> {order.price}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Total Price:</strong> {order.quantity*order.price}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Customer:</strong> {order.order.customer.full_name}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Order Status:</strong> <Badge color={'white'} bg={'green.300'}>{order.order.order_status}</Badge> 
+      </Box>
+      <Box> <Button as={Link} to={`/order/${order.id}/update`} className="bi bi-pencil-square update-icon">Update</Button>  </Box>
+      
+    </Stack>
+  ))} 
+           <Flex align="center" justify="center" mt={4} w="100%">
+    {hasPrevPage && (
+      <Button onClick={handlePrevPage} mr={2}>
+        Previous
+      </Button>
+    )}
+    <Box  mx={2}>
+      Page&nbsp;{currentPage}
+    </Box>
+    {hasNextPage && (
+      <Button onClick={handleNextPage} ml={2}>
+        Next
+      </Button>
+    )}
+  </Flex>
+</Box>
+       )
+        
       )}
 
  

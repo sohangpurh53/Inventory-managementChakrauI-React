@@ -4,6 +4,13 @@ import './css/style.css'
 import { useAuth } from '../context/AuthContext'
 import Loading from './isLoading'
 import axiosInstance from '../utils/axiosInstance'
+import {
+  Box, 
+  Button, 
+  Image,
+  Stack,
+  Flex,
+} from '@chakra-ui/react'
 
 const PurchaseList = () => {
     const { accessToken } = useAuth()
@@ -61,44 +68,65 @@ const PurchaseList = () => {
 
 
   return (
-    <div>
+    <>
 
       {isLoading? (<Loading/>):(
 (authenticated && (
-  <div className="purchase-container">
-      <table>
-    <thead> 
-    
-   <tr>
-    <th> Product Image</th>
-      <th> Product Name </th>
-      <th> Quantity </th>
-      </tr>   
-    </thead>
-      {purchaseDetail.map(purchase => (   
-        <tbody key={purchase.id}>
-      <tr> 
-        <td > <img src={purchase.product.image} alt="" /> </td>
-        <td> {purchase.product.name}  </td>
-        <td> {purchase.quantity}</td>
-        <td> <Link  to={`/purchase/${purchase.id}/update`}> <button className="bi bi-pencil-square update-icon">Update</button> </Link></td>
-        <td> <Link  to={`/purchase/${purchase.id}/delete`}> <button className="bi bi-trash delete-icon">Delete</button> </Link></td>
-        
-        </tr>
-        </tbody>
-      ))}
-  </table>
-  <div className="pagination">
-      {hasPrevPage && <button onClick={handlePrevPage}>Previous</button>}
-      <span className='page-number'> Page&nbsp;{currentPage}</span>
-      {hasNextPage && <button onClick={handleNextPage}>Next</button>}
-    </div>
-  </div>) )
+ 
+  <Box   >
+  {purchaseDetail.map((purchase, index) => (
+    <Stack
+    mt={5}
+   mx={'auto'}
+      maxW={'1000px'}
+      key={purchase.id}
+      direction={{ base: 'column', md: 'row' }}
+      spacing="2"
+      borderBottom="1px solid #ccc"
+      p="2"
+    >
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Purchase Index:</strong> {index+1}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Puchase:</strong> {purchase.product.name}
+      </Box>
+      <Box w={'30px'} h={'30px'} >
+      <Image objectFit={'contain'} src={purchase.product.image} alt={purchase.product.name} />
+      </Box>
+      
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Price:</strong> {purchase.product.price}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Quantity:</strong> {purchase.quantity}
+      </Box>
+      <Box> <Button className="bi bi-pencil-square" to={`/purchase/${purchase.id}/update`} as={Link}> Edit</Button></Box>
+      <Box> <Button bg={'red.400'} color={'white'} className="bi bi-trash" to={`/purchase/${purchase.id}/delete`} as={Link}> Delete</Button> </Box>
+    </Stack>
+  ))} 
+           <Flex align="center" justify="center" mt={4} w="100%">
+    {hasPrevPage && (
+      <Button onClick={handlePrevPage} mr={2}>
+        Previous
+      </Button>
+    )}
+    <Box  mx={2}>
+      Page&nbsp;{currentPage}
+    </Box>
+    {hasNextPage && (
+      <Button onClick={handleNextPage} ml={2}>
+        Next
+      </Button>
+    )}
+  </Flex>
+</Box>
+  ) )
       )}
       
         
 
-    </div>
+    </>
   )
 }
 

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
-import './css/style.css'
 import { useAuth } from '../context/AuthContext'
 import Loading from './isLoading'
 import axiosInstance from '../utils/axiosInstance'
@@ -8,12 +7,9 @@ import {
   Table,
   Thead,Box, Button, 
   Tbody,
-
   Tr,
   Th,
   Td,
-
-
   Flex,
 } from '@chakra-ui/react'
 
@@ -106,7 +102,7 @@ const CategoryList = () => {
         Previous
       </Button>
     )}
-    <Box className="page-number" mx={2}>
+    <Box  mx={2}>
       Page&nbsp;{currentPage}
     </Box>
     {hasNextPage && (

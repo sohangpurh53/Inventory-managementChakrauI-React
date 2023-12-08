@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Loading from './isLoading';
 import axiosInstance from '../utils/axiosInstance';
+import {
+ Box, Button, 
+ Image,
+
+ Stack,
+  Flex,
+} from '@chakra-ui/react'
 
 
 const Product = () => {
@@ -60,33 +67,55 @@ const Product = () => {
 
   return (
 
-    <div className='body'>
+    <>
       {isLoading ? (<Loading />) : (
         authenticated && (
-          <div className="container">
-            <ul className="product-list">
-              {products.map(product => (
-                <li key={product.id} className="product-item">
-                  <img src={product.image} alt="" /> <h6>{product.name} </h6>
-                  <ul className="product-details">
-                    <li>Description: {product.description.slice(0, 20)}{product.description.length > 100 ? '...' : ''}</li>
-                    <li>Price: {product.price}</li>
-                    <li><Link className='edit-button' to={`/product/${product.id}/update`}> <p className="bi bi-pencil-square"> Update</p> </Link></li>
-                    <li><Link  className='delete' to={`/product/${product.id}/delete`}> <p className="bi bi-trash"> Delete</p> </Link></li>
-                  </ul>
-                </li>
-              ))}
-            </ul>
-            <div className="pagination">
+        
+             <Box >
+  {products.map((product, index) => (
+    <Stack
+    mx={'auto'}
+      maxW={'1000px'}
+      key={product.id}
+      direction={{ base: 'column', md: 'row' }}
+      spacing="2"
+      borderBottom="1px solid #ccc"
+      p="2"
+    >
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Product No:</strong> {index+1}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Product:</strong> {product.name}
+      </Box>
+      <Box w={'30px'} h={'30px'} >
+      <Image objectFit={'contain'} src={product.image} alt={product.name} />
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Description:</strong> {product.description.slice(0, 20)}{product.description.length > 100 ? '...' : ''}
+      </Box>
+      <Box flex={{ base: '1', md: '2' }}>
+        <strong>Price:</strong> {product.price}
+      </Box>
+      <Box> <Button className="bi bi-pencil-square" to={`/product/${product.id}/update`} as={Link}> Edit</Button></Box>
+      <Box> <Button bg={'red.400'} color={'white'} className="bi bi-trash" to={`/product/${product.id}/delete`} as={Link}> Delete</Button> </Box>
+    </Stack>
+  ))} 
+            <Flex align="center" justify="center" mt={4} w="100%">
               {hasPrevPage && <button onClick={handlePrevPage}>Previous</button>}
-              <span className='page-number'> Page&nbsp;{currentPage}</span>
+              <Box> Page&nbsp;{currentPage}</Box>
               {hasNextPage && <button onClick={handleNextPage}>Next</button>}
-            </div>
-          </div>
+            </Flex>
+</Box>
+            
+           
+            
+           
+         
         )
       )}
 
-    </div>
+    </>
   );
 };
 

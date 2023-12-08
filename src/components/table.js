@@ -3,10 +3,23 @@ import './css/table.css';
 import axiosInstance from '../utils/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import Loading from './isLoading';
+import {
+  Table,
+  Thead,
+  Box, 
+  Tbody,
+  TableContainer,
+  Tr,
+  Th,
+  Td,
+
+TableCaption,
+Flex,
+
+} from '@chakra-ui/react'
 
 
-
-const Table = () => {
+const TableData = () => {
   const {accessToken} = useAuth()
   const [authenticated, setAuthenticated] = useState(false)
   const [orderDetails, setOrderDetails] = useState([]);
@@ -71,142 +84,162 @@ const Table = () => {
         <Loading />
       ) : (
         authenticated &&( 
-          <div className="table-container">
-          <div className="table-wrapper">
-            <h2>Purchase</h2>
-            <div className="data-table">
-            <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Purchase Price</th>
-              <th>Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {purchaseDetails.map((item, index) => (
-              <tr key={index}>
-                <td>{item.product.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.product.price}</td>
-                <td>{item.quantity * item.product.price}</td>
-              </tr>
-            ))}
-             <tr>
-              <td><b>Purchase Grand Total</b></td>
-              <td> <b>{totalPurchaseQuantity}</b></td>
-              <td> </td>
-              <td><b>{totalPurchasePrice}</b></td>
-            </tr>
-          </tbody>
-        </table>
-            </div>
-          </div>
-        
-          <div className="table-wrapper">
-            <h2>Order</h2>
-            <div className="data-table">
-            <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Sale Price</th>
-              <th>Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderDetails.map((item, index) => (
-              <tr key={index}>
-                <td>{item.product.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
-                <td>{item.quantity * item.price}</td>
-              </tr>
-            ))}
-            <tr>
-              <td><b>Order Grand Total</b></td>
-              <td> <b>{totalOrderQuantity}</b></td>
-              <td> </td>
-              <td><b>{totalOrdersalesPrice}</b></td>
-            </tr>
-          </tbody>
-        </table>
-            </div>
-          </div>
-        
-          <div className="table-wrapper">
-            <h2>Stock </h2>
-            <div className="data-table">
-            <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-            </tr>
-            
-          </thead>
-          <tbody>
-            {stockDetails.map((item, index) => (
-              <tr key={index}>
-                <td>{item.product.name}</td>
-                <td>{item.quantity}</td>
-                
-              </tr>
-            ))}
-           <tr>
-              <td><b>Total Stock Quantity</b></td>
-              <td>{totalStockQuantity}</td>
-            </tr>
          
-          </tbody>
-        </table>
-            </div>
-          </div>
+         
+          
+<Flex
+     mt={5}
+     wrap={'wrap'}
+     flexDirection={{base:'row', md:'column', lg:'row'}}
+    > 
+    {/* purchase */}
+    <Box mr={2}>  
+    <TableContainer>
+     <Table size={'md'}>
+     <TableCaption >Purchase</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Product Name</Th>
+              <Th>Quantity</Th>
+              <Th>Purchase Price</Th>
+              <Th>Total Price</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {purchaseDetails.map((item, index) => (
+              <Tr key={index}>
+                <Td>{item.product.name}</Td>
+                <Td>{item.quantity}</Td>
+                <Td>{item.product.price}</Td>
+                <Td>{item.quantity * item.product.price}</Td>
+              </Tr>
+            ))}
+             <Tr>
+              <Td><b>Purchase Grand Total</b></Td>
+              <Td> <b>{totalPurchaseQuantity}</b></Td>
+              <Td> </Td>
+              <Td><b>{totalPurchasePrice}</b></Td>
+            </Tr>
+          </Tbody>
+        </Table>
+        </TableContainer>
+        </Box>
         
-          <div className="table-wrapper">
-            <h2>Profit and Loss </h2>
-            <div className="data-table">
-            <table>
-          <thead>
-            <tr>
-              <th>Purchase Price Per Unit</th>
-              <th>Sale Price Per Unit</th>
-              <th>Qty Sold</th>
-              <th>Balance Amount</th>
-              <th>Profit or Loss</th>
+        {/* order */}
+        <Box mr={2}> 
+        <TableContainer> 
+            <Table size={'md'}>
+            <TableCaption>Order</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Product Name</Th>
+              <Th>Quantity</Th>
+              <Th>Sale Price</Th>
+              <Th>Total Price</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {orderDetails.map((item, index) => (
+              <Tr key={index}>
+                <Td>{item.product.name}</Td>
+                <Td>{item.quantity}</Td>
+                <Td>{item.price}</Td>
+                <Td>{item.quantity * item.price}</Td>
+              </Tr>
+            ))}
+            <Tr>
+              <Td><b>Order Grand Total</b></Td>
+              <Td> <b>{totalOrderQuantity}</b></Td>
+              <Td> </Td>
+              <Td><b>{totalOrdersalesPrice}</b></Td>
+            </Tr>
+          </Tbody>
+        </Table>
+        </TableContainer>
+        </Box>
+
+      {/* stock */}
+        <Box mr={2}>
+          <TableContainer> 
+             <Table size={'md'}>
+             <TableCaption>Stock</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Product Name</Th>
+              <Th>Quantity</Th>
+            </Tr>
+            
+          </Thead>
+          <Tbody>
+            {stockDetails.map((item, index) => (
+              <Tr key={index}>
+                <Td>{item.product.name}</Td>
+                <Td>{item.quantity}</Td>
+                
+              </Tr>
+            ))}
+           <Tr>
+              <Td><b>Total Stock Quantity</b></Td>
+              <Td>{totalStockQuantity}</Td>
+            </Tr>
+         
+          </Tbody>
+        </Table>
+          </TableContainer>
+        </Box>
+           
+           {/* profitandloss */}
+         <Box mr={2}>
+          <TableContainer>
+          <Table size={'md'}>
+            <TableCaption>
+              Profit & Loss
+            </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Purchase Price Per Unit</Th>
+              <Th>Sale Price Per Unit</Th>
+              <Th>Qty Sold</Th>
+              <Th>Balance Amount</Th>
+              <Th>Profit or Loss</Th>
              
               
-            </tr>
-          </thead>
-          <tbody>
+            </Tr>
+          </Thead>
+          <Tbody>
           {orderDetails.map((revenue, index) =>(
-          <tr key={index}>
-            <td>{revenue.product.price}</td>
-            <td>{revenue.price}</td>
-            <td>{revenue.quantity}</td>
-            <td style={{ color: (revenue.price * revenue.quantity - revenue.product.price * revenue.quantity) >= 0 ? 'green' : 'red' }}>{ revenue.price*revenue.quantity - revenue.product.price*revenue.quantity}</td>
-            <td style={{ color: (revenue.price * revenue.quantity - revenue.product.price * revenue.quantity) >= 0 ? 'green' : 'red' }}>
+          <Tr key={index}>
+            <Td>{revenue.product.price}</Td>
+            <Td>{revenue.price}</Td>
+            <Td>{revenue.quantity}</Td>
+            <Td style={{ color: (revenue.price * revenue.quantity - revenue.product.price * revenue.quantity) >= 0 ? 'green' : 'red' }}>{ revenue.price*revenue.quantity - revenue.product.price*revenue.quantity}</Td>
+            <Td style={{ color: (revenue.price * revenue.quantity - revenue.product.price * revenue.quantity) >= 0 ? 'green' : 'red' }}>
         { (revenue.price * revenue.quantity - revenue.product.price * revenue.quantity) >= 0 ? 'Profit' : 'Loss' }
-        </td>
-            </tr>
+        </Td>
+            </Tr>
         ))}   
-          <tr>
-              <td><b>Total <i>Profit / Loss</i></b></td>
-              <td> </td>
-              <td> </td>
-              <td style={{ color: (totalProfitOrLoss) >= 0 ? 'green' : 'red' }}><b>{totalProfitOrLoss}</b></td>
-            </tr>
-          </tbody>
-        </table>
-            </div>
-          </div>
-        </div>)
+          <Tr>
+              <Td><b>Total <i>Profit / Loss</i></b></Td>
+              <Td> </Td>
+              <Td> </Td>
+              <Td style={{ color: (totalProfitOrLoss) >= 0 ? 'green' : 'red' }}><b>{totalProfitOrLoss}</b></Td>
+            </Tr>
+          </Tbody>
+        </Table>
+        </TableContainer>
+         </Box>
+        
+       
+           
+        
+    </Flex>
+        
+        
+        )
       )
  
    
   );
 };
 
-export default Table;
+export default TableData;

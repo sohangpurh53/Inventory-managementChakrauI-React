@@ -1,0 +1,622 @@
+/* styles.css */
+.body{
+margin: 0;
+padding: 0;
+
+}
+.container{
+  margin: 0 auto;
+  max-width: 400px;
+  border: none;
+  display: flex;
+  justify-content: space-evenly;
+  
+  
+  
+}
+
+.container .product-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    grid-gap: 10px;
+    
+
+  }
+  
+  .container .product-item {
+    
+    padding: 5px 10px 5px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    max-width:max-content;
+  }
+  
+  .container .product-item h4 {
+    margin: 0 0 10px;
+  }
+  
+  .container .product-details {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .container .product-details li {
+    margin-bottom: 5px;
+  }
+  .container img{
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+  }
+
+  
+ .container-form {
+    margin: 0 auto;
+    width: 400px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+    border: 1px solid black;
+   
+  }
+  
+  .container-form input[type='text'], input[type='number'], input[type='email']{
+    width: 95%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+
+  
+  /* Buttons */
+  label{
+    color: #6c757d;
+    display: flex;
+    
+  }
+  .container-form button {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+  }
+  .container-form
+  input[type='text'], 
+  input[type='email'],
+  input[type='password'],
+  input[type='number'],
+  input[type='file'],
+  select{
+    width: 95%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+    
+  }
+
+
+  .container table {
+    max-width: max-content;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+   thead {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+   th, td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+   th {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+   tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .container img {
+    max-width: 50px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  
+   td:nth-child(2) {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+  }
+   .table-title{
+    text-align: center;
+    color: black;
+    background-color: white;
+  }
+
+
+
+
+ .loading{width: 100px;
+  height: 100px;
+  margin: 10% auto;
+  border-top: 1px solid whitesmoke;
+  border-bottom: 1px solid #2280bf;
+  border-right: 1px solid whitesmoke;
+  border-left: 1px solid #3498db;
+  border-radius: 50%;
+  
+  animation: infinite loadinganimation 0.5s linear ;
+}
+
+@keyframes loadinganimation {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.container a{
+  display: block;
+  padding: 2px;
+  width: 100%;
+  font-size: 8px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  color: black;
+  background-color: #b3bbc1;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+.container  .delete {
+  background-color: #ff6347; /* Tomato Red */
+  color: #fff;
+  font-size: x-small;
+}
+.container .delete:hover {
+  background-color: #f33f1f;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+
+.container .edit-button:hover {
+  background-color: #565c61;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+.container .edit-button {
+ font-size: x-small;
+ 
+}
+
+
+.container .pagination{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+ 
+}
+.container .pagination button{
+  margin: auto;
+  padding: 10px;
+  height: 50px;
+  margin-left: 15px;
+}
+.container .page-number{
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  
+}
+
+
+@media (max-width: 768px) {
+  .container .product-list {
+    max-width: 100%;
+  }
+  .container{
+    max-width: 50%;
+  }
+  
+
+  .container-form,
+  .product-list {
+    max-width: 70%; 
+  }
+
+  .container .product-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .loading{
+    margin: 10% auto;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container .product-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* css for category table */
+.categories-container {
+  display: flex;
+  justify-content: center;
+  margin: 5% auto;
+  flex-wrap: wrap;
+  max-width:max-content;
+}
+
+
+
+.categories-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.categories-container th,
+.categories-container td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.categories-container th {
+  background-color: #3498db;
+  color: white;
+}
+
+.categories-container tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.categories-container tr:hover {
+  background-color: #ddd;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+ .delete-icon {
+  background-color: #ff6347; /* Tomato Red */
+  color: #fff;
+  padding: 7.5px;
+  border: none;
+  border-radius: 4px;
+}
+.delete-icon:hover {
+  background-color: #f33f1f;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+.update-icon {
+  background-color: #a3aab0;
+  padding: 7.5px;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+ 
+}
+.update-icon:hover {
+  background-color: #6f777d;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+/* .update-icon:hover {
+  background-color: #a3a9ad;
+  transform:  translateY(-5px);
+ color: #fff;
+ padding: 5px;
+  border: none;
+ 
+} */
+
+
+@media (max-width: 768px) {
+  .categories-container {
+    margin-top: 5%; 
+    /* Adjust the margin for smaller screens */
+  }
+
+  .categories-container {
+   margin: 10px;
+   max-width: 100%; /* Allow the table to take full width on smaller screens */
+  }
+  .categories-container th,
+.categories-container td {
+  padding: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: smaller;
+}
+
+.delete-icon {
+  padding: 5px;
+  border-radius: 3px;
+}
+.update-icon {
+  padding: 5px;
+  border-radius: 3px;
+}
+
+
+}
+
+
+
+
+
+/* order details css */
+
+.order-container {
+  display: flex;
+  margin: 5% auto;
+  flex-wrap: wrap;
+  max-width:fit-content;
+}
+
+
+
+.order-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-container th,
+.order-container td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-container th {
+  background-color: #3498db;
+  color: white;
+}
+
+.order-container tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.order-container tr:hover {
+  background-color: #ddd;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+ .delete-icon {
+  background-color: #ff6347; /* Tomato Red */
+  color: #fff;
+  padding: 7.5px;
+  border: none;
+  border-radius: 4px;
+}
+.delete-icon:hover {
+  background-color: #f33f1f;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+.update-icon {
+  background-color: #a3aab0;
+  padding: 7.5px;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+ 
+}
+.update-icon:hover {
+  background-color: #6f777d;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+
+
+@media (max-width: 768px) {
+  /* .order-container {
+    margin-top: 5%; 
+    
+  } */
+
+  .order-container {
+   margin: 10px auto;
+   margin-left: 1%;
+   max-width: 100%;
+    /* Allow the table to take full width on smaller screens */
+  }
+  .order-container table{
+      width: 100%;
+      border-collapse:separate;
+      
+
+     /* Allow the table to take full width on smaller screens */
+   }
+  .order-container th,
+.order-container td {
+  padding: 2.5px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: x-small;
+  
+}
+
+.order-container .delete-icon {
+  padding: 2.5px;
+  border-radius: 3px;
+  font-size: x-small;
+}
+.order-container .update-icon {
+  padding: 2.5px;
+  border-radius: 3px;
+  font-size: x-small;
+}
+
+
+
+}
+
+
+
+
+/* puchase table css */
+.purchase-container {
+  display: flex;
+  margin: 5% auto;
+  flex-wrap: wrap;
+  max-width:max-content;
+}
+
+
+
+.purchase-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.purchase-container th,
+.purchase-container td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.purchase-container th {
+  background-color: #3498db;
+  color: white;
+}
+
+.purchase-container tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.purchase-container tr:hover {
+  background-color: #ddd;
+}
+
+.purchase-container td img{
+  height: 75px;
+  width: 75px;
+  object-fit: contain;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.purchase-container .delete-icon {
+  background-color: #ff6347; /* Tomato Red */
+  color: #fff;
+  padding: 7.5px;
+  border: none;
+  border-radius: 4px;
+}
+.purchase-container .delete-icon:hover {
+  background-color: #f33f1f;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+.purchase-container .update-icon {
+  background-color: #a3aab0;
+  padding: 7.5px;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+ 
+}
+.purchase-container.update-icon:hover {
+  background-color: #6f777d;
+  transform:  translateY(-5px);
+ color: #fff;
+ 
+}
+
+
+
+@media (max-width: 768px) {
+  .purchase-container {
+    margin-top: 5%; 
+    /* Adjust the margin for smaller screens */
+  }
+  .purchase-container td img{
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+  }
+
+  .purchase-container {
+   margin: 10px;
+   max-width: 100%; /* Allow the table to take full width on smaller screens */
+  }
+  .purchase-container th,
+.purchase-container td {
+  padding: 3px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: smaller;
+}
+
+.purchase-container .delete-icon {
+  padding: 2.5px;
+  border-radius: 3px;
+  font-size: x-small;
+}
+.purchase-container .update-icon {
+  padding: 2.5px;
+  border-radius: 3px;
+  font-size: x-small;
+}
+
+
+}
+
+

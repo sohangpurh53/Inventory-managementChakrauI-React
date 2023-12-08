@@ -1,0 +1,127 @@
+import React, {useEffect, useState} from 'react'
+import { Link } from 'react-router-dom'
+import './css/style.css'
+import { useAuth } from '../context/AuthContext'
+import Loading from './isLoading'
+import axiosInstance from '../utils/axiosInstance'
+import {
+  Table,
+  Thead,Box, Button, 
+  Tbody,
+
+  Tr,
+  Th,
+  Td,
+
+
+  Flex,
+} from '@chakra-ui/react'
+
+const CategoryList = () => {
+    const { accessToken } = useAuth()
+    const [authenticated, setAuthenticated] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
+    const [categoryDetail, setCategoryDetail] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const [hasPrevPage, setHasPrevPage] = useState(false);
+    useEffect(()=>{
+      const loadingTimeout = setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+     
+
+       if(accessToken){
+        setAuthenticated(true);
+        const loadPurchase = async ()=>{
+             try {
+              const categoryeData = await axiosInstance.get(`dashboard/category/list/?page=${currentPage}`,{headers: {
+                Authorization: `Bearer ${accessToken}`,
+            
+            }}).then(response => response.data);
+              setCategoryDetail(categoryeData.results || []);
+              setHasNextPage(categoryeData.next !== null);
+              setHasPrevPage(categoryeData.previous !== null);
+
+            } catch (error) {
+                console.log(error)
+            } 
+            
+    }
+    loadPurchase()
+       }
+       else{
+        setAuthenticated(false);
+        window.location.href = '/signin'
+       }
+            
+       
+       return () => clearTimeout(loadingTimeout);
+    }, [accessToken, currentPage])
+
+    const handleNextPage = () => {
+      if (hasNextPage) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+  
+    const handlePrevPage = () => {
+      if (hasPrevPage) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+   
+  return (
+    <Box >
+
+      {isLoading? (<Loading/>):(
+(authenticated && (
+  <Flex direction="column" align="center" maxW="100%">
+   <Flex
+    flexWrap="wrap"
+    justifyContent="center"
+    maxW="lg" 
+    minH={'md'}
+  >
+ <Table  variant={'simple'} size='sm'>
+<Thead >
+<Tr >
+  <Th>Category Name</Th>
+  <Th>Action</Th>
+</Tr>
+</Thead>    
+<Tbody >
+{categoryDetail.map(category => ( 
+ <Tr key={category.id}>
+  <Td> {category.name}</Td>
+  <Td> <Button  bg={'blue.50'}  fontSize={'sm'}  as={Link}  to={`/category/${category.id}/update`} >Update</Button> </Td>
+  <Td>  <Button bg={'red.400'}  fontSize={'sm'}  color={'white'} as={Link} to={`/category/${category.id}/delete`}>Delete</Button> </Td> 
+</Tr> ))} 
+</Tbody>
+    </Table>
+  </Flex>
+  <Flex align="center" justify="center" mt={4} w="100%">
+    {hasPrevPage && (
+      <Button onClick={handlePrevPage} mr={2}>
+        Previous
+      </Button>
+    )}
+    <Box className="page-number" mx={2}>
+      Page&nbsp;{currentPage}
+    </Box>
+    {hasNextPage && (
+      <Button onClick={handleNextPage} ml={2}>
+        Next
+      </Button>
+    )}
+  </Flex>
+</Flex>) )
+      )}
+      
+        
+
+    </Box>
+  )
+}
+
+export default CategoryList

@@ -1,0 +1,55 @@
+.user-profile-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+  }
+  
+  .user-profile-card {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    max-width: 300px;
+    overflow: hidden;
+  }
+  
+  .user-avatar {
+    width: 100%;
+    height: auto;
+  }
+  
+  .user-info {
+    padding: 16px;
+  }
+  
+  .user-name {
+    font-size: 1.2em;
+    margin: 0 0 8px;
+  }
+  
+  .user-email,
+  .user-location {
+    font-size: 0.9em;
+    margin: 0;
+  }
+
+  .edit-button-customer{
+    background-color: #007bff; /* Set button background color */
+    color: #141313; /* Set button text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding for better visual */
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .edit-button-customer:hover{
+    background-color: #0056b3; /* Change background color on hover */
+  transform: scale(1.1); /* Scale button slightly on hover */
+  }
+  
+  @media (max-width: 600px) {
+    .user-profile-card {
+      max-width: 100%;
+    }
+  }
+  

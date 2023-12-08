@@ -1,0 +1,144 @@
+/* Add a container for the entire dashboard */
+.dashboard-container {
+  display: flex;
+}
+
+/* Style the aside menu */
+.dashboard-aside-menu {
+  width: 200px; /* Adjust the width as needed */
+  background-color: #f0f0f0;
+  padding: 20px;
+/* Fix the position */
+}
+
+.dashboard-aside-menu button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.dashboard-aside-menu button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+/* Style the main content */
+.dashboard-main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 15%;
+  margin-top: -30%; /* Adjust margin to account for the aside menu */
+ 
+}
+
+.dashboard-main-content > div {
+  margin-bottom: 20px;
+}
+
+/* Style the burger menu for mobile */
+.burger-menu {
+  display: none; /* Initially hide it */
+}
+
+.homepage-message{
+  margin: 10% auto;
+  width: 200px;
+  height: 200px;
+  overflow: scroll;
+color: rgb(236, 73, 73);
+text-align: center;
+}
+
+@media (max-width: 768px) {
+  .burger-menu {
+    display: block; /* Show it for small screens */
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+   
+    width: 200px;
+    
+  }
+
+  .burger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+   
+    
+  }
+
+  .burger-icon .bar{
+    border: 1px solid white;
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .dashboard-aside-menu {
+    margin: 0;
+    width: 100%; /* Full width for small screens */
+    height: auto; /* Adjust height */
+    position: static; 
+    display: none;/* Remove fixed position */
+  }
+
+  .dashboard-main-content {
+    margin-left: 0;
+    margin-top: 5%; /* Reset margin for small screens */
+  }
+  .close-icon {
+    width: 30px;
+    height: 30px;
+    position: relative;
+  }
+  
+  .close-icon::before,
+  .close-icon::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+    top: 50%;
+    left: 0;
+    transform-origin: center;
+  }
+  
+  .close-icon::before {
+    transform: rotate(45deg);
+  }
+  
+  .close-icon::after {
+    transform: rotate(-45deg);
+  }
+
+  .burger-menu button{
+    display: flex;
+    justify-content: space-around;
+    
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+}
+

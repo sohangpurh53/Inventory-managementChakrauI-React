@@ -1,0 +1,46 @@
+/* Add this code to your existing CSS file */
+
+.footer-main {
+  background-color: #3498db;
+    border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center align text in footer */
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0; /* Remove default margin */
+  }
+  
+  .footer-item {
+    margin: 0 10px;
+  }
+  
+  .footer-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  
+  .footer-link:hover {
+    color: #555;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-list {
+      flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+    
+    .footer-item {
+      margin: 5px 0; /* Adjust margin for smaller screens */
+    }
+  }
+  

@@ -16,8 +16,9 @@ import GraphComponent from './graphData';
 import CustomerRegister from './auth/customerRegister';
 import SupplierRegister from './auth/supplierRegister';
 import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakra-ui/react';
-  import { BiSidebar } from 'react-icons/bi';
+  // import { BiSidebar } from 'react-icons/bi';
   import { CloseIcon } from '@chakra-ui/icons';
+  import { CgMenuGridO } from "react-icons/cg";
 
   const AdminDashboard = () => {
     const { isOpen, onToggle } = useDisclosure();
@@ -78,9 +79,11 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
   
           <HStack  p="4" bg="gray.700" color="white" w={{ base: '100%', md: '7.5%', lg:'5%' }}>
             <IconButton
-            icon={isOpen ? <CloseIcon />: <BiSidebar />}
+            icon={isOpen ? <CloseIcon />: <CgMenuGridO  />
+           }
               onClick={onToggle}
               aria-label="Toggle Navigation Bar"
+              mx={'auto'}
             />
           </HStack>
   
@@ -98,20 +101,20 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
           >
             {isOpen && (
               <>
-                 <Button onClick={() => handleClick('ProductForm')}>Create-Product</Button>
-                  <Button onClick={() => handleClick('PurchaseForm')}>Create-Purchase</Button>
-                  <Button onClick={() => handleClick('OrderForm')}>Create-Order</Button>
-                  <Button onClick={() => handleClick('CategoryForm')}>Create-Category</Button>
-                  <Button onClick={() => handleClick('CustomerForm')}>Create-Customer</Button>
-                  <Button onClick={() => handleClick('SupplierForm')}>Create-Supplier</Button>
-                  <Button onClick={() => handleClick('Category')}>Category</Button>
-                  <Button onClick={() => handleClick('Product')}>Product</Button>
-                  <Button onClick={() => handleClick('PurchaseList')}>Purchase</Button>
-                  <Button onClick={() => handleClick('StockList')}>Stock</Button>
-                  <Button onClick={() => handleClick('OrderItemList')}>Order</Button>
-                  <Button onClick={() => handleClick('SuppliersInfo')}>Supplier</Button>
-                  <Button onClick={() => handleClick('CustomersInfo')}>Customer</Button>
-                  <Button onClick={() => handleClick('TableInfo')}>Inventory</Button>
+                 <Button w={'100%'} onClick={() => handleClick('ProductForm')}>Create-Product</Button>
+                  <Button w={'100%'} onClick={() => handleClick('PurchaseForm')}>Create-Purchase</Button>
+                  <Button w={'100%'} onClick={() => handleClick('OrderForm')}>Create-Order</Button>
+                  <Button w={'100%'} onClick={() => handleClick('CategoryForm')}>Create-Category</Button>
+                  <Button w={'100%'} onClick={() => handleClick('CustomerForm')}>Create-Customer</Button>
+                  <Button w={'100%'} onClick={() => handleClick('SupplierForm')}>Create-Supplier</Button>
+                  <Button w={'100%'} onClick={() => handleClick('Category')}>Category</Button>
+                  <Button w={'100%'} onClick={() => handleClick('Product')}>Product</Button>
+                  <Button w={'100%'} onClick={() => handleClick('PurchaseList')}>Purchase</Button>
+                  <Button w={'100%'} onClick={() => handleClick('StockList')}>Stock</Button>
+                  <Button w={'100%'} onClick={() => handleClick('OrderItemList')}>Order</Button>
+                  <Button w={'100%'} onClick={() => handleClick('SuppliersInfo')}>Supplier</Button>
+                  <Button w={'100%'} onClick={() => handleClick('CustomersInfo')}>Customer</Button>
+                  <Button w={'100%'} onClick={() => handleClick('TableInfo')}>Inventory</Button>
               </>
             )}
           </VStack>

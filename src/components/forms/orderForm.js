@@ -4,7 +4,18 @@ import axiosInstance from '../../utils/axiosInstance'
 import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import {
+  FormControl,
+  FormLabel,
+  Input,
 
+Select,
+  Button,
+  Heading,
+  Flex,
+
+
+} from '@chakra-ui/react'
 
 const OrderForm = () => {
     const {accessToken} = useAuth()
@@ -94,47 +105,46 @@ const OrderForm = () => {
     
   return (
    
-    <div className='body'>
+    <>
  {isLoading? (<Loading/>):( authenticated &&(
-      <fieldset className="container-form">
+      <Flex mx={'auto'}  padding={5} wrap={'wrap'} boxShadow={'md'} maxW={{base:'md', md:'md', lg:'lg'}}>
       <NotificationComponent message={notificationMessage} />
-          <legend> <h3>Order</h3> </legend>
-          <form >
-  
-          <div>
-   <label htmlFor="product">Product:</label>
-   <select
-     name="product"
-     value={orderFormData.product}
-     onChange={handleChange}
-     required
-   >
-     <option value="" disabled>Select a Product</option>
-     {productDetail.map(products => (
-       <option key={products.id} value={products.product.id}>
-         {products.product.name}
-       </option>
-     ))}
-   </select>
-  </div>
-  
-  <div>
-   <label htmlFor="order status">Order Status:</label>
-   <select
-     name="order_status"
-     value={orderFormData.order_status}
-     onChange={handleChange}
-     required
-   >
-     <option value="" disabled>Select a Order Status</option>
-       <option value='pending'>Pending</option>
-       <option value='successful'>Successful</option>
-    
-   </select>
-  </div>
-          <div>
-   <label htmlFor="customer">Customer:</label>
-   <select
+      <Heading mx={'auto'}  size={'lg'} color={'gray.300'}> Order </Heading>
+          <FormControl>
+                <FormLabel htmlFor="product">Product:</FormLabel>
+        <Select
+        name="product"
+        value={orderFormData.product}
+        onChange={handleChange}
+        required
+      >
+      <option value="" disabled>Select a Product</option>
+      {productDetail.map(products => (
+        <option key={products.id} value={products.product.id}>
+          {products.product.name}
+        </option>
+      ))}
+    </Select>
+          </FormControl>
+
+    <FormControl>
+    <FormLabel htmlFor="order status">Order Status:</FormLabel>
+    <Select
+      name="order_status"
+      value={orderFormData.order_status}
+      onChange={handleChange}
+      required
+    >
+      <option value="" disabled>Select a Order Status</option>
+        <option value='pending'>Pending</option>
+        <option value='successful'>Successful</option>
+      
+    </Select>
+    </FormControl>
+
+    <FormControl>
+   <FormLabel htmlFor="customer">Customer:</FormLabel>
+   <Select
      name="customer"
      value={orderFormData.customer}
      onChange={handleChange}
@@ -146,11 +156,12 @@ const OrderForm = () => {
          {customer.full_name}
        </option>
      ))}
-   </select>
-  </div>
-  <div>
-         <label htmlFor="quantity">Quantity:</label>
-         <input
+   </Select>
+  </FormControl>
+
+  <FormControl>
+         <FormLabel htmlFor="quantity">Quantity:</FormLabel>
+         <Input
            type="number"
           
            name="quantity"
@@ -158,10 +169,11 @@ const OrderForm = () => {
            onChange={handleChange}
            required
          />
-       </div>
-  <div>
-         <label htmlFor="price">Price:</label>
-         <input
+       </FormControl>
+
+  <FormControl>
+         <FormLabel htmlFor="price">Price:</FormLabel>
+         <Input
            type="number"
           
            name="price"
@@ -169,20 +181,20 @@ const OrderForm = () => {
            onChange={handleChange}
            required
          />
-       </div>
+  </FormControl>
   
   
-       <button onClick={createOrder}> Generate Order</button>
-          </form>
+       <Button color={'white'} _hover={{bg:'green.600'}} bg={'green.400'} m={2} onClick={createOrder}> Generate Order</Button>
+      
   
   
-          </fieldset>
+          </Flex>
     )
   
  )}
 
        
-    </div>
+    </>
   )
 }
 

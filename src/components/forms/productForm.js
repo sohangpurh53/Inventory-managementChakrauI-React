@@ -5,7 +5,18 @@ import axiosInstance from '../../utils/axiosInstance'
 import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import {
+  FormControl,
+  FormLabel,
+  Input,
 
+Select,
+  Button,
+  Heading,
+  Flex,
+
+
+} from '@chakra-ui/react'
 
 const ProductForm = () => {
   const {accessToken} = useAuth()
@@ -82,47 +93,55 @@ const ProductForm = () => {
     const file = e.target.files[0];
     setProductform({
       ...productform,
-      image: file,
+      image: file, // Set the file object, not just the metadata
     });
   };
-
-  const createProduct = (e) => {
+console.log(productform)
+  const createProduct = async (e) => {
     e.preventDefault();
-
+  
     const formDataToSend = new FormData();
     formDataToSend.append('name', productform.name);
     formDataToSend.append('category', productform.category);
     formDataToSend.append('description', productform.description);
-    formDataToSend.append('image', productform.image);
     formDataToSend.append('price', productform.price);
     formDataToSend.append('supplier', productform.supplier);
-
-    axiosInstance.post('product/create/', formDataToSend, {headers: {
-      Authorization: `Bearer ${accessToken}`,
+    formDataToSend.append('image', productform.image); // Incorrect: Needs to be corrected
   
-  }})
-      .then(response => {if (response.data) {
+    try {
+      const response = await axiosInstance.post('product/create/', formDataToSend, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+  
+      if (response.data) {
         setNotificationMessage(`Product Entry created successfully!`);
         setTimeout(() => {
-          setNotificationMessage(''); // Reset notification after 5 seconds
+          setNotificationMessage('');
         }, 5000);
       } else {
         setNotificationMessage('Failed to create entry.');
-      }})
-      .catch(error => console.error('Error creating product:', error));
-  };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+   
+      
+
   return (
-    <div className='body'>
-      {isLoading? (<Loading/>):(authenticated &&( <fieldset className="container-form">
+    <>
+      {isLoading? (<Loading/>):(authenticated &&( <Flex wrap={'wrap'} boxShadow={'md'} padding={5} justifyContent={'center'}  mx={'auto'} maxW={{base:'md', md:'md', lg:'lg'}}>
         <NotificationComponent message={notificationMessage} />
-        <legend> <h3>Product</h3></legend>
+       
 
 
-        <form encType="multipart/form-data">
-
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input
+       
+ <Heading mx={'auto'}  size={'lg'} color={'blackAlpha.200'}> Product </Heading>
+          <FormControl >
+            <FormLabel htmlFor="name">Name:</FormLabel>
+            <Input
               type="text"
 
               name="name"
@@ -130,11 +149,11 @@ const ProductForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="category">Category:</label>
-            <select
+          <FormControl  >
+            <FormLabel htmlFor="category">Category:</FormLabel>
+            <Select
               name="category"
               value={productform.category}
               onChange={handleChange}
@@ -146,34 +165,35 @@ const ProductForm = () => {
                   {category.name}
                 </option>
               ))}
-            </select>
-          </div>
+            </Select>
+          </FormControl>
 
-          <div>
-            <label htmlFor="description">Description:</label>
-            <input
+          <FormControl  >
+            <FormLabel htmlFor="description">Description:</FormLabel>
+            <Input
               type="text"
-
+            
               name="description"
               value={productform.description}
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="image">Image:</label>
-            <input
+          <FormControl  >
+            <FormLabel htmlFor="image">Image:</FormLabel>
+            <Input
               type="file"
               name="image"
               onChange={handleImageChange}
               required
+              
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="name">Price:</label>
-            <input
+          <FormControl  >
+            <FormLabel htmlFor="name">Price:</FormLabel>
+            <Input
               type="number"
 
               name="price"
@@ -181,11 +201,11 @@ const ProductForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="supplier">Supplier:</label>
-            <select
+          <FormControl  >
+            <FormLabel htmlFor="supplier">Supplier:</FormLabel>
+            <Select
               name="supplier"
               value={productform.supplier}
               onChange={handleChange}
@@ -197,20 +217,20 @@ const ProductForm = () => {
                   {supplier.full_name}
                 </option>
               ))}
-            </select>
-          </div>
+            </Select>
+          </FormControl>
 
 
-          <button onClick={createProduct}>Create Product</button>
+          <Button color={'white'} m={5} _hover={{bg:'green.600'}}  bg={'green.400'} onClick={createProduct}>Create Product</Button>
 
-        </form>
+      
 
 
-      </fieldset>)
+      </Flex>)
        
       )}
       
-    </div>
+    </>
   )
 }
 

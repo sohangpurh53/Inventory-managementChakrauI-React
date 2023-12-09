@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/style.css'
-import { Box, Container, keyframes } from '@chakra-ui/react';
+import { Box, Container, Flex, keyframes } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
 const Loading = () => {
@@ -15,17 +15,20 @@ const Loading = () => {
 const animation = `${animationKeyframes} 2s ease-in-out infinite`;
   return (
     <Container  mx={'auto'} h="100vh" display="flex" alignItems={'center'} justifyContent="center">
-    <Box
+      <Flex justifyContent={'center'} alignItems={'center'} w={'100px'} h={'100px'} borderRadius={'50%'} border={'2px'} borderColor={'blue.200'}>
+         <Box
       as={motion.div}
       animation={animation}
       // not work: transition={{ ... }}
       padding="2"
       // @ts-ignore - "Does not exist" Type Error against Motion
-      bgGradient="linear-gradient(to left, #2196f3, #f44336)"
+      bgGradient="linear-gradient(to left, #E4F3E3, #5CA9E9)"
       width="12"
       height="12"
       display="flex"
     />
+      </Flex>
+   
   </Container>
   );
 };

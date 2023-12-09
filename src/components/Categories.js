@@ -74,7 +74,7 @@ const CategoryList = () => {
 
       {isLoading? (<Loading/>):(
 (authenticated && (
-  <Flex direction="column" align="center" maxW="100%">
+  <Flex mt={5} direction="column" align="center" maxW="100%">
    <Flex
     flexWrap="wrap"
     justifyContent="center"

@@ -12,31 +12,31 @@ const Footer = () => {
           </li>
          
           <li className="footer-item">
-            <Link to="/product" className="footer-link">Products</Link>
+            <Link to="/product/" className="footer-link">Products</Link>
           </li>
          
           <li className="footer-item">
-            <Link to="/category" className="footer-link">Catergories</Link>
+            <Link to="/category/" className="footer-link">Catergories</Link>
           </li>
           <li className="footer-item">
-            <Link to="/order" className="footer-link">Orders</Link>
+            <Link to="/order/" className="footer-link">Orders</Link>
           </li>
           <li className="footer-item">
-            <Link to="/purchase" className="footer-link">Purchase</Link>
+            <Link to="/purchase/" className="footer-link">Purchase</Link>
           </li>
           <li className="footer-item">
-            <Link to="/stock" className="footer-link">Stocks</Link>
+            <Link to="/stock/" className="footer-link">Stocks</Link>
           </li>
           <li className="footer-item">
-            <Link to="/customer" className="footer-link">Customer</Link>
-          </li>
-         
-          <li className="footer-item">
-            <Link to="/supplier" className="footer-link">Supplier</Link>
+            <Link to="/customer/" className="footer-link">Customer</Link>
           </li>
          
           <li className="footer-item">
-            <Link to="/inventory" className="footer-link">Inventory</Link>
+            <Link to="/supplier/" className="footer-link">Supplier</Link>
+          </li>
+         
+          <li className="footer-item">
+            <Link to="/inventory/" className="footer-link">Inventory</Link>
           </li>
          
         </ul>

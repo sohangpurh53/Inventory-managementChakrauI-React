@@ -75,6 +75,7 @@ const Product = () => {
              <Box >
   {products.map((product, index) => (
     <Stack
+    mt={5}
     mx={'auto'}
       maxW={'1000px'}
       key={product.id}

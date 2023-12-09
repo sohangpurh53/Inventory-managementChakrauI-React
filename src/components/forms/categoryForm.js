@@ -8,8 +8,10 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Box,
+
   Button,
+  Heading,
+  Flex,
 
 
 } from '@chakra-ui/react'
@@ -72,29 +74,31 @@ const CategoryForm = () => {
     
   }
   return (
-    <div className='body'>
+    <>
       {isLoading? (<Loading/>):( authenticated && (
-      <Box w={{base:'md', lg:'lg'}}> 
+      <Flex wrap={'wrap'} mx={'auto'} boxShadow={'md'} maxW={{base:'md', md:'md', lg:'lg'}}> 
       <NotificationComponent message={notificationMessage} />
-          
-          <FormControl>
+          <Heading mx={'auto'}  size={'lg'} color={'blue.200'}> Category </Heading>
+          <FormControl ml={5}>
             <FormLabel>Name:</FormLabel>
-            <Input
+            <Input   
+                  
               type="text"
+              w={'90%'}
               name="name"
               value={categoryform.name}
               onChange={categoryHandleChange}
               required
             />
           </FormControl>
-          <Button mt={2} onClick={createCategory} >Create Category</Button>
+          <Button color={'white'} bg={'green.400'} m={5} onClick={createCategory} >Create Category</Button>
         
           
     
-      </Box>) ) }
+      </Flex>) ) }
 
      
-    </div>
+    </>
   )
 }
 

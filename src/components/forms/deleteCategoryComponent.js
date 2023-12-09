@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance';
 import '../css/delete.css'
 import { useAuth } from '../../context/AuthContext';
+import { Button, Text, Badge, Flex } from '@chakra-ui/react';
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+
 
 const DeleteCategory = () => {
     const {accessToken} = useAuth()
@@ -39,15 +42,21 @@ const DeleteCategory = () => {
     }
 
     return (
-        <div className="confirmation-box">
+   <>
+   <Button mx={5}  my={10} bg={'white'} onClick={()=>{Navigate('/')}}><IoArrowBackCircleSharp size={'30px'} color='gray' /></Button>
+        <Flex mt={5} flexDirection={'column'} mx={'auto'}  wrap={'wrap'} gap={4} maxW={{base:'md', md:'md', lg:'lg'}}>
+           
             {deleteCategory && (
                 <>
-                    <p>Are you sure you want to delete {deleteCategory.name}?</p>
-                    <button className='delete' onClick={handleDelete}>Delete</button>
-                    <button className='cancel' onClick={() => Navigate(`/`)}>Cancel</button>
+                    <Text fontSize={{base:'md', md:'md', lg:'xl'}} textAlign={'center'}>Are you sure you want to delete <Badge color={'red.400'}>{deleteCategory.name}?</Badge> </Text>
+                  <Flex mx={'auto'} gap={4} flexDirection={'row'}> 
+                    <Button maxW={'50%'} bg={'red.400'} _hover={{bg:'red.600'}} color={'white'} onClick={handleDelete}>Delete</Button>
+                    <Button  maxW={'50%'} onClick={() => Navigate(`/`)}>Cancel</Button>
+                    </Flex> 
                 </>
             )}
-        </div>
+        </Flex> 
+        </>
     );
 }
 

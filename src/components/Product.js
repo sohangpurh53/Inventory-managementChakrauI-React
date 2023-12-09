@@ -80,7 +80,7 @@ const Product = () => {
       key={product.id}
       direction={{ base: 'column', md: 'row' }}
       spacing="2"
-      borderBottom="1px solid #ccc"
+      boxShadow={'md'}
       p="2"
     >
       <Box flex={{ base: '1', md: '2' }}>

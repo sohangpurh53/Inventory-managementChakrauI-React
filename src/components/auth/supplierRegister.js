@@ -3,6 +3,7 @@ import './supplier.css'
 import Loading from '../isLoading';
 import axiosInstance from '../../utils/axiosInstance';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const SupplierRegister = () => {
@@ -15,6 +16,7 @@ const SupplierRegister = () => {
     address: '',
     mobile_no: ''
   });
+  const  Navigate = useNavigate()
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
@@ -25,11 +27,11 @@ const SupplierRegister = () => {
       setAuthenticated(true);
     }else{
       setAuthenticated(false);
-      window.location.href ='/signin'
+      Navigate('/signin')
     }
 
     return () => clearTimeout(loadingTimeout);
-  }, [accessToken]);
+  }, [accessToken, Navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,6 +1,6 @@
 // ProductUpdateForm.js
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance'
 import NotificationComponent from '../Notification';
 import { useAuth } from '../../context/AuthContext';
@@ -12,6 +12,7 @@ const StockUpdateForm = () => {
   const [stocksDetail, setStocksDetail] = useState({
     quantity:'',
   });
+  const  Navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +58,7 @@ const StockUpdateForm = () => {
           setNotificationMessage('Stock Entry Updated successfully!');
           setTimeout(() => {
             setNotificationMessage(''); // Reset notification after 5 seconds
-            window.location.href='/'
+            Navigate('/')
           }, 2500);
         } else {
           setNotificationMessage('Failed to create entry.');

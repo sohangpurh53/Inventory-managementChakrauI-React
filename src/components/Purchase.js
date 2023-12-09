@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './css/style.css'
 import { useAuth } from '../context/AuthContext'
 import Loading from './isLoading'
@@ -20,6 +20,8 @@ const PurchaseList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(true);
     const [hasPrevPage, setHasPrevPage] = useState(false);
+    const Navigate = useNavigate()
+
     useEffect(()=>{
       const loadingTimeout = setTimeout(() => {
         setIsLoading(false);
@@ -47,12 +49,12 @@ const PurchaseList = () => {
        }
        else{
         setAuthenticated(false);
-        window.location.href = '/signin'
+        Navigate('/signin')
        }
             
        
        return () => clearTimeout(loadingTimeout);
-    }, [accessToken, currentPage])
+    }, [accessToken, currentPage, Navigate])
 
     const handleNextPage = () => {
       if (hasNextPage) {

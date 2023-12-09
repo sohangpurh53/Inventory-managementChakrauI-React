@@ -14,14 +14,14 @@ const Loading = () => {
 
 const animation = `${animationKeyframes} 2s ease-in-out infinite`;
   return (
-    <Container mx={'auto'} h="100vh" display="flex" alignItems={'center'} justifyContent="center">
+    <Container  mx={'auto'} h="100vh" display="flex" alignItems={'center'} justifyContent="center">
     <Box
       as={motion.div}
       animation={animation}
       // not work: transition={{ ... }}
       padding="2"
       // @ts-ignore - "Does not exist" Type Error against Motion
-      bgGradient="linear(to-l, #7928CA, #FF0080)"
+      bgGradient="linear-gradient(to left, #2196f3, #f44336)"
       width="12"
       height="12"
       display="flex"

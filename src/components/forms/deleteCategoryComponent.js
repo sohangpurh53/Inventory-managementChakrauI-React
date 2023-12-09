@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance';
 import '../css/delete.css'
 import { useAuth } from '../../context/AuthContext';
@@ -8,7 +8,7 @@ const DeleteCategory = () => {
     const {accessToken} = useAuth()
     const { id } = useParams();
     const [deleteCategory, setDeleteCategory] = useState(null);
-    
+    const  Navigate = useNavigate()
 
     useEffect(() => {
         const fetchCategory = async () => {
@@ -32,7 +32,7 @@ const DeleteCategory = () => {
             
             }});
             // Redirect to another page after deletion (you can replace '/' with your desired path)
-            window.location.href = '/';
+            Navigate('/') 
         } catch (error) {
             console.error('Error deleting item:', error);
         }
@@ -44,7 +44,7 @@ const DeleteCategory = () => {
                 <>
                     <p>Are you sure you want to delete {deleteCategory.name}?</p>
                     <button className='delete' onClick={handleDelete}>Delete</button>
-                    <button className='cancel' onClick={() => window.location.href = `/`}>Cancel</button>
+                    <button className='cancel' onClick={() => Navigate(`/`)}>Cancel</button>
                 </>
             )}
         </div>

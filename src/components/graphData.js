@@ -3,12 +3,17 @@ import { Chart } from 'chart.js/auto';
 import axiosInstance from '../utils/axiosInstance';
 import './css/graph.css';
 import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
+import Loading from './isLoading';
+import { Flex } from '@chakra-ui/react';
 
 const GraphComponent = () => {
   const {accessToken} = useAuth()
   const [authenticated, setAuthenticated] = useState(false)
   const chartRef = useRef(null);
   const [data, setData] = useState([]);
+  const Navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => { if(accessToken){
         setAuthenticated(true);
@@ -55,10 +60,18 @@ const GraphComponent = () => {
                 stockQty: combinedData[productId].stockQty
               };
             });
-    
+           
             setData(chartData);
+            if(chartData){
+              setIsLoading(false)
+            }else{
+              setIsLoading(true)
+            }
+    
+            
           } catch (error) {
             console.log('Error fetching data:', error);
+            setIsLoading(false)
           }
         };
     
@@ -66,10 +79,10 @@ const GraphComponent = () => {
 
       }else{
         setAuthenticated(false);
-        window.location.href = '/signin'
+        Navigate('/signin')  
       }
     
-  }, [accessToken]);
+  }, [accessToken, Navigate]);
 
   useEffect(() => {
     if(accessToken){
@@ -126,7 +139,7 @@ const GraphComponent = () => {
     
   }, [accessToken, data]);
 
-  return authenticated &&( <div className='container-graph'><canvas ref={chartRef} width="400" height="400"></canvas></div>);
+  return authenticated &&( isLoading? <Loading />: <Flex mx={'auto'} bg={'#f7f7f7'} maxW={'md'} wrap={'wrap'}  padding={5}><canvas ref={chartRef} width="400" height="400"></canvas></Flex>);
 };
 
 export default GraphComponent;

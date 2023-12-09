@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './css/style.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Loading from './isLoading';
 import axiosInstance from '../utils/axiosInstance';
@@ -21,6 +21,7 @@ const Product = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [hasPrevPage, setHasPrevPage] = useState(false);
+  const Navigate = useNavigate()
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
@@ -49,9 +50,9 @@ const Product = () => {
       fetchData();
     } else {
       setAuthenticated(false);
-      window.location.href = '/signin';
+      Navigate('/signin')
     }
-  }, [accessToken, currentPage]);
+  }, [accessToken, currentPage, Navigate]);
 
   const handleNextPage = () => {
     if (hasNextPage) {

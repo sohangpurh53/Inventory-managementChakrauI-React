@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axiosInstance from '../../utils/axiosInstance'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import '../auth/supplier.css'
 import NotificationComponent from '../Notification';
 import { useAuth } from '../../context/AuthContext';
@@ -15,6 +15,7 @@ const UpdateCustomer = () => {
     address: '',
     mobile_no: ''
   })
+  const  Navigate = useNavigate() 
 
     useEffect(()=> {
         const fetchCustomer = async ()=>{
@@ -50,7 +51,7 @@ const UpdateCustomer = () => {
                   setNotificationMessage('Customer Entry Updated successfully!');
                   setTimeout(() => {
                     setNotificationMessage(''); // Reset notification after 5 seconds
-                    window.location.href='/'
+                    Navigate('/')
                   }, 2500);
                 } else {
                   setNotificationMessage('Failed to create entry.');

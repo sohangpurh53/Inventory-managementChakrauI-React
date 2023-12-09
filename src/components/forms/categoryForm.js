@@ -4,7 +4,17 @@ import Loading from '../isLoading';
 import NotificationComponent from '../Notification';
 import axiosInstance from '../../utils/axiosInstance'
 import { useAuth } from '../../context/AuthContext';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Box,
+  Button,
 
+
+} from '@chakra-ui/react'
+
+import { useNavigate } from 'react-router-dom';
 
 
 const CategoryForm = () => {
@@ -15,6 +25,9 @@ const CategoryForm = () => {
   const [categoryform, setCategoryForm] = useState({
     name: '',
   });
+  const  Navigate = useNavigate()
+
+
   const categoryHandleChange = (e) => {
     const { name, value } = e.target;
     setCategoryForm({
@@ -31,11 +44,11 @@ const CategoryForm = () => {
       setAuthenticated(true);
     }else{
       setAuthenticated(false);
-      window.location.href ='/signin'
+      Navigate('/signin')
     }
 
     return () => clearTimeout(loadingTimeout);
-  }, [accessToken]);
+  }, [accessToken, Navigate]);
 
 
   const createCategory = (e) => {
@@ -60,24 +73,25 @@ const CategoryForm = () => {
   }
   return (
     <div className='body'>
-      {isLoading? (<Loading/>):( authenticated && (<fieldset className="container-form"> 
+      {isLoading? (<Loading/>):( authenticated && (
+      <Box w={{base:'md', lg:'lg'}}> 
       <NotificationComponent message={notificationMessage} />
-      <legend> <h3>Category</h3> </legend>
-        <form >
-          <div>
-            <label htmlFor="category">Name:</label>
-            <input
+          
+          <FormControl>
+            <FormLabel>Name:</FormLabel>
+            <Input
               type="text"
               name="name"
               value={categoryform.name}
               onChange={categoryHandleChange}
               required
             />
-          </div>
-          <button onClick={createCategory} >Create Category</button>
+          </FormControl>
+          <Button mt={2} onClick={createCategory} >Create Category</Button>
+        
           
-        </form>
-      </fieldset>) ) }
+    
+      </Box>) ) }
 
      
     </div>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance'
 import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
@@ -15,6 +15,7 @@ const UpdatePurchase = () => {
       supplier:'',
     });
     const { id } = useParams();
+    const  Navigate = useNavigate()
 
     useEffect(()=>{
       const fetchPurchase = async() =>{
@@ -69,7 +70,7 @@ const UpdatePurchase = () => {
           setNotificationMessage(`Purchase Entry Upadted successfully!`);
           setTimeout(() => {
             setNotificationMessage(''); // Reset notification after 5 seconds
-            window.location.href='/'
+            Navigate('/') 
           }, 3000);
         } else {
           setNotificationMessage('Failed to create entry.');

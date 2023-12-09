@@ -4,6 +4,7 @@ import Loading from "../isLoading";
 import axiosInstance from "../../utils/axiosInstance";
 import NotificationComponent from "../Notification";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const PurchaseForm = () => {
   const {accessToken} = useAuth()
@@ -17,6 +18,8 @@ const PurchaseForm = () => {
         product:'',
         quantity:'',
     });
+    const  Navigate = useNavigate()
+
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setIsLoading(false);
@@ -51,14 +54,14 @@ const PurchaseForm = () => {
 
     }else{
       setAuthenticated(false);
-      window.location.href ='/signin'
+      Navigate('/signin')
     }
 
 
 
 
     return () => clearTimeout(loadingTimeout);
-  }, [accessToken]);
+  }, [accessToken, Navigate]);
  
 
   const handleChange = (e) => {

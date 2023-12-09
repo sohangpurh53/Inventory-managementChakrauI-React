@@ -17,6 +17,7 @@ TableCaption,
 Flex,
 
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom';
 
 
 const TableData = () => {
@@ -26,6 +27,7 @@ const TableData = () => {
   const [purchaseDetails, setPurchaseDetails] = useState([]);
   const [stockDetails, setStockDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const Navigate = useNavigate()
 
   useEffect(() => {
     
@@ -58,12 +60,12 @@ const TableData = () => {
       fetchData();
     }else{
       setAuthenticated(false);
-      window.location.href = '/signin'
+      Navigate('/signin') 
     }
     // Clear the timeout if component is unmounted
      return () => clearTimeout(loadingTimeout);
     
-  }, [accessToken]);
+  }, [accessToken, Navigate]);
 
   
   // Total quantity calculation
@@ -88,6 +90,7 @@ const TableData = () => {
          
           
 <Flex
+mx={'auto'}
      mt={5}
      wrap={'wrap'}
      flexDirection={{base:'row', md:'column', lg:'row'}}

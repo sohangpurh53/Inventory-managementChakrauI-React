@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axiosInstance'
 import './css/user.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Loading from './isLoading'
 import {
@@ -17,6 +17,7 @@ const CustomersInfo = () => {
     const [customerDetail, setCustomerrDetails] = useState([]);
     const [authenticated, setAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const Navigate = useNavigate()
 
     useEffect(()=> {
 
@@ -44,12 +45,12 @@ const CustomersInfo = () => {
       }
       else{
         setAuthenticated(false);
-        window.location.href = '/signin'
+        Navigate('/signin')
       }
           // Clear the timeout if component is unmounted
           return () => clearTimeout(loadingTimeout);
 
-    }, [accessToken])
+    }, [accessToken, Navigate])
 
   return (  isLoading?(<Loading/>):(
     authenticated &&(

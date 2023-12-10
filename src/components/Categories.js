@@ -24,25 +24,27 @@ const CategoryList = () => {
     const Navigate = useNavigate()
 
     useEffect(()=>{
-      const loadingTimeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
      
 
        if(accessToken){
         setAuthenticated(true);
         const loadPurchase = async ()=>{
              try {
-              const categoryeData = await axiosInstance.get(`dashboard/category/list/?page=${currentPage}`,{headers: {
+              const categoryData = await axiosInstance.get(`dashboard/category/list/?page=${currentPage}`,{headers: {
                 Authorization: `Bearer ${accessToken}`,
             
-            }}).then(response => response.data);
-              setCategoryDetail(categoryeData.results || []);
-              setHasNextPage(categoryeData.next !== null);
-              setHasPrevPage(categoryeData.previous !== null);
+            }})
+            if(categoryData){
+              setCategoryDetail(categoryData.data.results || []);
+              setHasNextPage(categoryData.data.next !== null);
+              setHasPrevPage(categoryData.data.previous !== null);
+              setIsLoading(false)
+            }
+              
 
             } catch (error) {
                 console.log(error)
+                setIsLoading(false)
             } 
             
     }
@@ -54,7 +56,7 @@ const CategoryList = () => {
        }
             
        
-       return () => clearTimeout(loadingTimeout);
+       
     }, [accessToken, currentPage, Navigate])
 
     const handleNextPage = () => {

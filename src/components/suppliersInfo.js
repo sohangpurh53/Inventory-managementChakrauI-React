@@ -22,24 +22,28 @@ const SuppliersInfo = () => {
 
     useEffect(()=> { 
         // Simulate data loading with a setTimeout
-        const loadingTimeout = setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-    
+       
       
       if(accessToken){
         setAuthenticated(true);
-        const fetchSupplier = ()=>{
-          axiosInstance.get('dashboard/supplier/list/',{headers: {
+       
+        const fetchSupplier = async ()=>{
+           try {
+         const responseSupplier = await axiosInstance.get('dashboard/supplier/list/',{headers: {
             Authorization: `Bearer ${accessToken}`,
         
-        }}).then(response => {
-               setSupplierDetails(response.data);
-              })
-              .catch(error => {
-                console.error('Error fetching data:', error);
-              });
+        }}) 
+        if(responseSupplier.data){
+           setSupplierDetails(responseSupplier.data);
+           setIsLoading(false)
+        }
+            
               
+        } catch (error) {
+          console.log(`Error fetching data: ${error}`)
+          setIsLoading(false)
+        }
+          
         }
         fetchSupplier()
       }else{
@@ -48,7 +52,7 @@ const SuppliersInfo = () => {
       }
 
       // Clear the timeout if component is unmounted
-      return () => clearTimeout(loadingTimeout);
+      
         
 
     }, [accessToken, Navigate])

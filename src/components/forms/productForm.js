@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import '../css/style.css'
 import Loading from '../isLoading';
 import axiosInstance from '../../utils/axiosInstance'
-import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
   FormLabel,
   Input,
-
+useToast,
 Select,
   Button,
   Heading,
@@ -21,7 +20,6 @@ Select,
 const ProductForm = () => {
   const {accessToken} = useAuth()
     const [authenticated, setAuthenticated] = useState(false)
-  const [notificationMessage, setNotificationMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [supplierOptions, setSupplierOptions] = useState([]);
@@ -34,6 +32,7 @@ const ProductForm = () => {
     supplier: '',
   });
   const  Navigate = useNavigate()
+  const toast = useToast()
 
   // useEffect(() => {
     
@@ -91,12 +90,16 @@ const ProductForm = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setProductform({
-      ...productform,
-      image: file, // Set the file object, not just the metadata
-    });
+  
+    // Ensure 'file' exists and is of type 'File' before updating the state
+    if (file instanceof File) {
+      setProductform({
+        ...productform,
+        image: file,
+      });
+    }
   };
-console.log(productform)
+
   const createProduct = async (e) => {
     e.preventDefault();
   
@@ -106,25 +109,33 @@ console.log(productform)
     formDataToSend.append('description', productform.description);
     formDataToSend.append('price', productform.price);
     formDataToSend.append('supplier', productform.supplier);
-    formDataToSend.append('image', productform.image); // Incorrect: Needs to be corrected
-  
+    formDataToSend.append('image', productform.image, productform.image.name);  
     try {
       const response = await axiosInstance.post('product/create/', formDataToSend, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
   
       if (response.data) {
-        setNotificationMessage(`Product Entry created successfully!`);
-        setTimeout(() => {
-          setNotificationMessage('');
-        }, 5000);
-      } else {
-        setNotificationMessage('Failed to create entry.');
-      }
+        toast({
+          title: 'Product Created Successfully',
+          status: 'success',
+          duration: 5000,
+          position:'top-right',
+          isClosable: true,
+        })
+      } 
     } catch (error) {
-      console.log(error);
+      // console.log(`error while create product ${error.message}`);
+      toast({
+          title: 'error while create product',
+          status: 'warning',
+          position:'top-right',
+          duration: 5000,
+          isClosable: true,
+        })
     }
   }
    
@@ -133,14 +144,10 @@ console.log(productform)
   return (
     <>
       {isLoading? (<Loading/>):(authenticated &&( <Flex wrap={'wrap'} boxShadow={'md'} padding={5} justifyContent={'center'}  mx={'auto'} maxW={{base:'md', md:'md', lg:'lg'}}>
-        <NotificationComponent message={notificationMessage} />
-       
 
-
-       
  <Heading mx={'auto'}  size={'lg'} color={'blackAlpha.200'}> Product </Heading>
           <FormControl >
-            <FormLabel htmlFor="name">Name:</FormLabel>
+            <FormLabel >Name:</FormLabel>
             <Input
               type="text"
 
@@ -152,7 +159,7 @@ console.log(productform)
           </FormControl>
 
           <FormControl  >
-            <FormLabel htmlFor="category">Category:</FormLabel>
+            <FormLabel >Category:</FormLabel>
             <Select
               name="category"
               value={productform.category}
@@ -169,7 +176,7 @@ console.log(productform)
           </FormControl>
 
           <FormControl  >
-            <FormLabel htmlFor="description">Description:</FormLabel>
+            <FormLabel >Description:</FormLabel>
             <Input
               type="text"
             
@@ -181,7 +188,7 @@ console.log(productform)
           </FormControl>
 
           <FormControl  >
-            <FormLabel htmlFor="image">Image:</FormLabel>
+            <FormLabel >Image:</FormLabel>
             <Input
               type="file"
               name="image"
@@ -192,7 +199,7 @@ console.log(productform)
           </FormControl>
 
           <FormControl  >
-            <FormLabel htmlFor="name">Price:</FormLabel>
+            <FormLabel >Price:</FormLabel>
             <Input
               type="number"
 
@@ -204,7 +211,7 @@ console.log(productform)
           </FormControl>
 
           <FormControl  >
-            <FormLabel htmlFor="supplier">Supplier:</FormLabel>
+            <FormLabel >Supplier:</FormLabel>
             <Select
               name="supplier"
               value={productform.supplier}

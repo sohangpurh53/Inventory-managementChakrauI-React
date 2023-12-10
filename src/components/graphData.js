@@ -60,14 +60,14 @@ const GraphComponent = () => {
                 stockQty: combinedData[productId].stockQty
               };
             });
-           
-            setData(chartData);
             if(chartData){
               setIsLoading(false)
             }else{
               setIsLoading(true)
             }
     
+            setData(chartData);
+           
             
           } catch (error) {
             console.log('Error fetching data:', error);

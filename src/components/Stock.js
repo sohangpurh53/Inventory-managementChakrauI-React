@@ -24,9 +24,7 @@ const StockList = () => {
     const Navigate = useNavigate()
 
     useEffect(()=>{
-      const loadingTimeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+    
 
 
       if(accessToken){
@@ -40,11 +38,14 @@ const StockList = () => {
               Authorization: `Bearer ${accessToken}`,
           
           }}
-            ).then(response=> response.data);
-          setStockDetails(stockData);
-          setStockDetails(stockData.results || []);
-                setHasNextPage(stockData.next !== null);
-                setHasPrevPage(stockData.previous !== null);
+            )
+            if(stockData.data){
+              setIsLoading(false)
+            }
+          // setStockDetails(stockData.data);
+          setStockDetails(stockData.data.results || []);
+                setHasNextPage(stockData.data.next !== null);
+                setHasPrevPage(stockData.data.previous !== null);
          } catch (error) {
               console.log(error)
          }
@@ -56,7 +57,7 @@ const StockList = () => {
         setAuthenticated(false);
         Navigate('/signin') 
       }
-      return () => clearTimeout(loadingTimeout);
+     
         
     }, [accessToken, currentPage, Navigate])
 

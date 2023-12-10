@@ -22,23 +22,26 @@ const CustomersInfo = () => {
     useEffect(()=> {
 
         // Simulate data loading with a setTimeout
-        const loadingTimeout = setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-    
+       
 
       if(accessToken){
         setAuthenticated(true);
-        const fetchCustomer = ()=>{
-          axiosInstance.get('dashboard/customer/list/',{headers: {
+        const fetchCustomer = async ()=>{
+          try {
+            const customerResponse = await axiosInstance.get('dashboard/customer/list/',{headers: {
             Authorization: `Bearer ${accessToken}`,
         
-        }}).then(response => {
-            setCustomerrDetails(response.data);
-              })
-              .catch(error => {
-                console.error('Error fetching data:', error);
-              });
+        }})
+            
+              if(customerResponse.data){
+                setCustomerrDetails(customerResponse.data);
+                setIsLoading(false)
+              }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsLoading(false)
+          }
+          
               
         }
         fetchCustomer()
@@ -48,7 +51,7 @@ const CustomersInfo = () => {
         Navigate('/signin')
       }
           // Clear the timeout if component is unmounted
-          return () => clearTimeout(loadingTimeout);
+         
 
     }, [accessToken, Navigate])
 

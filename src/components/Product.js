@@ -23,14 +23,7 @@ const Product = () => {
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const Navigate = useNavigate()
 
-  useEffect(() => {
-    const loadingTimeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(loadingTimeout);
-  }, []);
-
+ 
   useEffect(() => {
     if (accessToken) {
       setAuthenticated(true);
@@ -39,12 +32,17 @@ const Product = () => {
           const fetchedProducts = await axiosInstance(`dashboard/products/list/?page=${currentPage}`,{headers: {
             Authorization: `Bearer ${accessToken}`,
         
-        }}).then(response => response.data);
-          setProducts(fetchedProducts.results || []);
-          setHasNextPage(fetchedProducts.next !== null);
-          setHasPrevPage(fetchedProducts.previous !== null);
+        }})
+        if(fetchedProducts.data){
+          setIsLoading(false)
+        }
+          setProducts(fetchedProducts.data.results || []);
+          setHasNextPage(fetchedProducts.data.next !== null);
+          setHasPrevPage(fetchedProducts.data.previous !== null);
+
         } catch (error) {
           console.log(error);
+          setIsLoading(false)
         }
       };
       fetchData();

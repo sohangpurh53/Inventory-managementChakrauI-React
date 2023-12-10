@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Loading from '../isLoading'
 import axiosInstance from '../../utils/axiosInstance'
-import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -13,6 +12,7 @@ Select,
   Button,
   Heading,
   Flex,
+  useToast,
 
 
 } from '@chakra-ui/react'
@@ -21,7 +21,6 @@ const OrderForm = () => {
     const {accessToken} = useAuth()
     const [authenticated, setAuthenticated] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const [notificationMessage, setNotificationMessage] = useState('');
     const [customerDetail, setCustomerDetail] =useState([])
     const [productDetail, setProductDetail] = useState([])
     const [orderFormData, setOrderFormData] = useState({
@@ -32,12 +31,11 @@ const OrderForm = () => {
         quantity:'',
     })
     const  Navigate = useNavigate()
+    const toast = useToast()
 
     useEffect(()=>{
      
-      const loadingTimeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+     
       if(accessToken){
         setAuthenticated(true);
         const fetchdata = async ()=>{
@@ -46,18 +44,22 @@ const OrderForm = () => {
               ([axiosInstance.get('purchases/', {headers: {
                 Authorization: `Bearer ${accessToken}`,
             
-            }}).then(response => response.data),
+            }}),
               axiosInstance.get('dashboard/customer/list/', {headers: {
                 Authorization: `Bearer ${accessToken}`,
             
-            }}).then(response => response.data),
+            }})
           ])
-              
-              setProductDetail(productData)
-              setCustomerDetail(customerData)
+              if(productData.data && customerData.data){
+                 setProductDetail(productData.data)
+              setCustomerDetail(customerData.data)
+              setIsLoading(false)
+              }
+             
               
           } catch (error) {
               console.log(`error while fetching data: ${error}`)
+              setIsLoading(false)
           }
       }
       fetchdata()
@@ -67,7 +69,7 @@ const OrderForm = () => {
       }
 
         
-        return () => clearTimeout(loadingTimeout);
+      
 
         
     }, [accessToken, Navigate])
@@ -91,15 +93,26 @@ const OrderForm = () => {
             quantity:orderFormData.quantity,
             price:orderFormData.price,
         }
-  
-        await axiosInstance.post('order-item/create/', data).then(response => {if (response.data) {
-          setNotificationMessage(`Order Entry created successfully!`);
-          setTimeout(() => {
-            setNotificationMessage(''); // Reset notification after 5 seconds
-          }, 5000);
-        } else {
-          setNotificationMessage('Failed to create entry.');
-        }}).catch(error => console.error('Error creating product:', error));
+  try {
+    const response = await axiosInstance.post('order-item/create/', data)
+    if (response.data) {
+          toast({
+            title: 'Order Entry Created Successfully',
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+          })
+        }
+  } catch (error) {
+    toast({
+          title: `Please check all require fields`,
+          status: 'warning',
+          duration: 5000,
+          isClosable: true,
+          position:'top-rght'
+        });
+  }
+
 
     }
     
@@ -108,9 +121,8 @@ const OrderForm = () => {
     <>
  {isLoading? (<Loading/>):( authenticated &&(
       <Flex mx={'auto'}  padding={5} wrap={'wrap'} boxShadow={'md'} maxW={{base:'md', md:'md', lg:'lg'}}>
-      <NotificationComponent message={notificationMessage} />
       <Heading mx={'auto'}  size={'lg'} color={'gray.300'}> Order </Heading>
-          <FormControl>
+          <FormControl isRequired>
                 <FormLabel htmlFor="product">Product:</FormLabel>
         <Select
         name="product"
@@ -127,7 +139,7 @@ const OrderForm = () => {
     </Select>
           </FormControl>
 
-    <FormControl>
+    <FormControl isRequired>
     <FormLabel htmlFor="order status">Order Status:</FormLabel>
     <Select
       name="order_status"
@@ -142,7 +154,7 @@ const OrderForm = () => {
     </Select>
     </FormControl>
 
-    <FormControl>
+    <FormControl isRequired>
    <FormLabel htmlFor="customer">Customer:</FormLabel>
    <Select
      name="customer"
@@ -159,7 +171,7 @@ const OrderForm = () => {
    </Select>
   </FormControl>
 
-  <FormControl>
+  <FormControl isRequired>
          <FormLabel htmlFor="quantity">Quantity:</FormLabel>
          <Input
            type="number"
@@ -171,7 +183,7 @@ const OrderForm = () => {
          />
        </FormControl>
 
-  <FormControl>
+  <FormControl isRequired>
          <FormLabel htmlFor="price">Price:</FormLabel>
          <Input
            type="number"

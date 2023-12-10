@@ -24,10 +24,7 @@ const OrderItemList = () => {
     const Navigate = useNavigate()
 
     useEffect(()=>{
-      const loadingTimeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-
+   
 
       if(accessToken){
         setAuthenticated(true);
@@ -37,13 +34,17 @@ const OrderItemList = () => {
                   const orderData = await axiosInstance.get(`dashboard/order/list/?page=${currentPage}`,{headers: {
                     Authorization: `Bearer ${accessToken}`,
                 
-                }}).then(response => response.data);
-                  setOrderDetails(orderData.results || []);
-                  setHasNextPage(orderData.next !== null);
-                  setHasPrevPage(orderData.previous !== null);
+                }})
+                if(orderData.data){
+                  setIsLoading(false)
+                }
+                  setOrderDetails(orderData.data.results || []);
+                  setHasNextPage(orderData.data.next !== null);
+                  setHasPrevPage(orderData.data.previous !== null);
 
                 } catch (error) {
                     console.log(error)
+                    setIsLoading(false)
                 } 
                 
         }
@@ -53,7 +54,7 @@ const OrderItemList = () => {
           Navigate('/signin') 
         }
 
-        return () => clearTimeout(loadingTimeout);
+      
             
        
         

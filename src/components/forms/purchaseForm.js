@@ -2,14 +2,25 @@ import React, { useEffect, useState } from "react"
 import '../css/style.css'
 import Loading from "../isLoading";
 import axiosInstance from "../../utils/axiosInstance";
-import NotificationComponent from "../Notification";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+
+Select,
+  Button,
+  Heading,
+  Flex,
+  useToast,
+
+
+} from '@chakra-ui/react'
 
 const PurchaseForm = () => {
   const {accessToken} = useAuth()
   const [authenticated, setAuthenticated] = useState(false)
-  const [notificationMessage, setNotificationMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [productOption, setProductOption] = useState([]);
     const [supplierOptions, setSupplierOptions] = useState([]);
@@ -19,12 +30,9 @@ const PurchaseForm = () => {
         quantity:'',
     });
     const  Navigate = useNavigate()
+    const toast = useToast()
 
   useEffect(() => {
-    const loadingTimeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
     if(accessToken){
       setAuthenticated(true);
      
@@ -34,19 +42,24 @@ const PurchaseForm = () => {
             axiosInstance.get('suppliers/', {headers: {
               Authorization: `Bearer ${accessToken}`,
           
-          }}).then(response => response.data),
+          }}),
             axiosInstance.get('products/', {headers: {
               Authorization: `Bearer ${accessToken}`,
           
-          }}).then(response => response.data)
+          }}),
+
            
           ]);
+          if(suppliers.data && products.data){
+            setIsLoading(false)
+          }
     
-          setSupplierOptions(suppliers);
-          setProductOption(products);
+          setSupplierOptions(suppliers.data);
+          setProductOption(products.data);
          
         } catch (error) {
           console.log(error);
+          setIsLoading(false)
         }
       };
   
@@ -60,7 +73,7 @@ const PurchaseForm = () => {
 
 
 
-    return () => clearTimeout(loadingTimeout);
+  
   }, [accessToken, Navigate]);
  
 
@@ -73,27 +86,40 @@ const PurchaseForm = () => {
   };
 
 
-  const createPurchase = (e)=>{
+  const createPurchase = async (e)=>{
     e.preventDefault();
         const formDataToSend = new FormData();
         formDataToSend.append('supplier', purchaseform.supplier);
         formDataToSend.append('product', purchaseform.product);
         formDataToSend.append('quantity', purchaseform.quantity);
     
-        axiosInstance.post('purchase/create/', 
+      try {
+       const response = await axiosInstance.post('purchase/create/', 
           formDataToSend, {headers: {
             Authorization: `Bearer ${accessToken}`,
         
         }})
-          .then(response => {if (response.data) {
-            setNotificationMessage(`Purchase Entry created successfully!`);
-            setTimeout(() => {
-              setNotificationMessage(''); // Reset notification after 5 seconds
-            }, 5000);
-          } else {
-            setNotificationMessage('Failed to create entry.');
-          }})
-          .catch(error => console.error('Error creating product:', error));
+        if(response.request.status===201) {
+          toast({
+            title: 'Purchase Entry Created Successfully',
+            status: 'success',
+            duration: 5000,
+            position:'top-right',
+            isClosable: true,
+          })
+          
+          } 
+      } catch (error) {
+          toast({
+          title: `Please check all require fields`,
+          status: 'warning',
+          duration: 5000,
+          isClosable: true,
+          position:'top-rght'
+        });      
+        
+      }  
+         
   }
 
   return (
@@ -101,13 +127,12 @@ const PurchaseForm = () => {
 
 {isLoading? (<Loading/>):(
   authenticated &&(
-<fieldset className="container-form">
-<NotificationComponent message={notificationMessage} />
- <legend> <h3>Purchase</h3> </legend>
- <form encType="multipart/form-data"> 
-<div>
-<label htmlFor="product">Product:</label>
-<select
+<Flex mx={'auto'} gap={3} boxShadow={'md'} padding={5} wrap={'wrap'} maxW={{base:'md', md:'md', lg:'lg'}}>
+ <Heading mx={'auto'} color={'gray.300'}> Purchase </Heading>
+ <> 
+<FormControl>
+<FormLabel htmlFor="product">Product:</FormLabel>
+<Select
 name="product"
 value={purchaseform.product}
 onChange={handleChange}
@@ -119,14 +144,14 @@ required
 {products.name}
 </option>
 ))}
-</select>
-</div>
+</Select>
+</FormControl>
 
 
 
-<div>
-<label htmlFor="name">Quantity:</label>
-<input
+<FormControl>
+<FormLabel htmlFor="name">Quantity:</FormLabel>
+<Input
   type="number"
  
   name="quantity"
@@ -134,11 +159,11 @@ required
   onChange={handleChange}
   required
 />
-</div>
+</FormControl>
 
-<div>
-<label htmlFor="supplier">Supplier:</label>
-<select
+<FormControl>
+<FormLabel htmlFor="supplier">Supplier:</FormLabel>
+<Select
 name="supplier"
 value={purchaseform.supplier}
 onChange={handleChange}
@@ -150,14 +175,14 @@ required
 {supplier.full_name}
 </option>
 ))}
-</select>
-</div>
+</Select>
+</FormControl>
 
 
-<button onClick={createPurchase} >Create Purchase</button>
+<Button onClick={createPurchase} >Create Purchase</Button>
 
-</form>
-</fieldset>
+</>
+</Flex>
   )
  
 )}

@@ -4,7 +4,7 @@ const baseURL = 'https://api.inventory-management.digitaltek.co.in/api/';
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 10000,
+  // timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
     accept: 'application/json',

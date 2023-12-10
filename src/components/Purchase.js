@@ -23,10 +23,7 @@ const PurchaseList = () => {
     const Navigate = useNavigate()
 
     useEffect(()=>{
-      const loadingTimeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-     
+    
 
        if(accessToken){
         setAuthenticated(true);
@@ -35,13 +32,17 @@ const PurchaseList = () => {
               const purchaseData = await axiosInstance.get(`/dashboard/purchase/list/?page=${currentPage}`, {headers: {
                 Authorization: `Bearer ${accessToken}`,
             
-            }}).then(response => response.data);
-              setPurchaseDetail(purchaseData.results || []);
-              setHasNextPage(purchaseData.next !== null);
-              setHasPrevPage(purchaseData.previous !== null);
+            }})
+            if(purchaseData.data){
+              setIsLoading(false)
+            }
+              setPurchaseDetail(purchaseData.data.results || []);
+              setHasNextPage(purchaseData.data.next !== null);
+              setHasPrevPage(purchaseData.data.previous !== null);
 
             } catch (error) {
                 console.log(error)
+                setIsLoading(false)
             } 
             
     }
@@ -53,7 +54,7 @@ const PurchaseList = () => {
        }
             
        
-       return () => clearTimeout(loadingTimeout);
+      
     }, [accessToken, currentPage, Navigate])
 
     const handleNextPage = () => {

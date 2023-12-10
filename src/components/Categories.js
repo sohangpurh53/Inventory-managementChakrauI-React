@@ -83,8 +83,8 @@ const CategoryList = () => {
     maxW="lg" 
     minH={'md'}
   >
- <Table  variant={'simple'} size='sm'>
-<Thead >
+ <Table variant={'simple'} color={'blue.400'} colorScheme='gray' size='sm'>
+<Thead  >
 <Tr >
   <Th>Category Name</Th>
   <Th>Action</Th>
@@ -95,7 +95,7 @@ const CategoryList = () => {
  <Tr key={category.id}>
   <Td> {category.name}</Td>
   <Td> <Button  bg={'blue.50'}  fontSize={'sm'}  as={Link}  to={`/category/${category.id}/update`} >Update</Button> </Td>
-  <Td>  <Button bg={'red.400'}  fontSize={'sm'}  color={'white'} as={Link} to={`/category/${category.id}/delete`}>Delete</Button> </Td> 
+  <Td>  <Button bg={'red.400'} _hover={{bg:'red.600'}} fontSize={'sm'}  color={'white'} as={Link} to={`/category/${category.id}/delete`}>Delete</Button> </Td> 
 </Tr> ))} 
 </Tbody>
     </Table>

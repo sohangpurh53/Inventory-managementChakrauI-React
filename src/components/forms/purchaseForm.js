@@ -130,7 +130,7 @@ const PurchaseForm = () => {
 <Flex mx={'auto'} gap={3} boxShadow={'md'} padding={5} wrap={'wrap'} maxW={{base:'md', md:'md', lg:'lg'}}>
  <Heading mx={'auto'} color={'gray.300'}> Purchase </Heading>
  <> 
-<FormControl>
+<FormControl isRequired>
 <FormLabel htmlFor="product">Product:</FormLabel>
 <Select
 name="product"
@@ -149,7 +149,7 @@ required
 
 
 
-<FormControl>
+<FormControl isRequired>
 <FormLabel htmlFor="name">Quantity:</FormLabel>
 <Input
   type="number"
@@ -161,7 +161,7 @@ required
 />
 </FormControl>
 
-<FormControl>
+<FormControl isRequired>
 <FormLabel htmlFor="supplier">Supplier:</FormLabel>
 <Select
 name="supplier"
@@ -179,7 +179,7 @@ required
 </FormControl>
 
 
-<Button onClick={createPurchase} >Create Purchase</Button>
+<Button bg={'green.400'} color={'white'} _hover={{bg:'green.600'}} onClick={createPurchase} >Create Purchase</Button>
 
 </>
 </Flex>

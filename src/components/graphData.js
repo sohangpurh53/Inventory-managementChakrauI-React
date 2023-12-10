@@ -61,12 +61,11 @@ const GraphComponent = () => {
               };
             });
             if(chartData){
+              setData(chartData);
               setIsLoading(false)
-            }else{
-              setIsLoading(true)
             }
     
-            setData(chartData);
+            
            
             
           } catch (error) {

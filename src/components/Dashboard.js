@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import ProductForm from './forms/productForm';
 import PurchaseForm from './forms/purchaseForm';
 import OrderForm from './forms/orderForm';
@@ -19,19 +19,23 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
   // import { BiSidebar } from 'react-icons/bi';
   import { CloseIcon } from '@chakra-ui/icons';
   import { CgMenuGridO } from "react-icons/cg";
-import Loading from './isLoading';
+// import Loading from './isLoading';
 
   const AdminDashboard = () => {
     const { isOpen, onToggle } = useDisclosure();
     const [activeComponent, setActiveComponent] = useState('TableDisplay');
-    const [isLoading, setIsLoading] = useState(true)
+    // const [isLoading, setIsLoading] = useState(true)
 
 
-    useEffect(()=>{
+    // useEffect(()=>{
      
-      setTimeout(()=>{ setIsLoading(false)},1000)
+    //   const loadingTimeout = setTimeout(() => {
+    //     setIsLoading(false);
+    //   }, 1500);
+  
+    //   return () => clearTimeout(loadingTimeout);
 
-    },[])
+    // },[])
 
     const handleClick = (componentName) => {
       setActiveComponent(componentName);
@@ -79,7 +83,7 @@ import Loading from './isLoading';
     return (
 
 
-       isLoading? <Loading/> : 
+      //  isLoading? <Loading/> : 
     <Box
           display="flex"
           flexDirection={{ base: 'column', md: 'row' }}

@@ -63,6 +63,7 @@ const GraphComponent = () => {
             if(chartData){
               setData(chartData);
               setIsLoading(false)
+             
             }
     
             
@@ -71,6 +72,7 @@ const GraphComponent = () => {
           } catch (error) {
             console.log('Error fetching data:', error);
             setIsLoading(false)
+            // setIsLoading(false)
           }
         };
     
@@ -83,60 +85,73 @@ const GraphComponent = () => {
     
   }, [accessToken, Navigate]);
 
-  useEffect(() => {
-    if(accessToken){
-      setAuthenticated(true);
-      const renderChart = () => {
-        const labels = data.map(item => item.productName);
-        const purchaseValues = data.map(item => item.purchaseQty);
-        const stockValues = data.map(item => item.stockQty);
-  
-        const ctx = chartRef.current.getContext('2d');
-  
-        if (window.myChart) {
-          window.myChart.destroy();
-        }
-  
-        window.myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: 'Total Products Qty',
-                data: purchaseValues,
-                backgroundColor: 'rgba(46, 145, 138, 0.7)',
-                borderColor: 'rgba(255, 255, 255, 1)',
-                borderWidth: 1
-              },
-              {
-                label: 'Remaining Stock Qty',
-                data: stockValues,
-                backgroundColor: 'rgba(114, 205, 165, 0.7)',
-                borderColor: 'rgba(255, 255, 255, 1)',
-                borderWidth: 1
-              }
-            ]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
+  const getChart = ()=>{
+    try {
+      if(accessToken){
+        setAuthenticated(true);
+        // const renderChart = () => {
+          const labels = data.map(item => item.productName);
+          const purchaseValues = data.map(item => item.purchaseQty);
+          const stockValues = data.map(item => item.stockQty);
+    
+          const ctx = chartRef.current.getContext('2d');
+    
+          if (window.myChart) {
+            window.myChart.destroy();
+          }
+    
+          window.myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Total Products Qty',
+                  data: purchaseValues,
+                  backgroundColor: 'rgba(46, 145, 138, 0.7)',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: 'Remaining Stock Qty',
+                  data: stockValues,
+                  backgroundColor: 'rgba(114, 205, 165, 0.7)',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  borderWidth: 1
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
               }
             }
-          }
-        });
-      };
+          });
+        // };
+        
+     
+       
   
-      if (data.length > 0) {
-        renderChart();
+      }else{
+        setAuthenticated(false);
+       
       }
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
 
-    }else{
-      setAuthenticated(false);
+  useEffect(() => {
+  
+    if (data.length > 0) {
+           getChart()
     }
     
-  }, [accessToken, data]);
+  });
+ 
 
   return authenticated &&( isLoading? <Loading />: <Flex mx={'auto'} bg={'#f7f7f7'} maxW={{base:'250px', md:'md', lg:'lg'}} wrap={'wrap'}  padding={5}><canvas ref={chartRef} width="400" height="400"></canvas></Flex>);
 };

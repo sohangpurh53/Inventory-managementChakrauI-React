@@ -17,7 +17,7 @@ function SignOutComponent() {
                 if (response.status === 200) {
                     localStorage.removeItem('access_token');
                     localStorage.removeItem('refresh_token');
-                    Navigate('/signin')
+                    Navigate('/signin/')
                 } else {
                     console.log('something went wrong');
                 }

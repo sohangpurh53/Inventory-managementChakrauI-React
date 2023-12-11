@@ -45,7 +45,7 @@ const CategoryForm = () => {
       setAuthenticated(true);
     }else{
       setAuthenticated(false);
-      Navigate('/signin')
+      Navigate('/signin/')
     }
 
     return () => clearTimeout(loadingTimeout);
@@ -69,6 +69,9 @@ const CategoryForm = () => {
       isClosable: true,
       position:'top-right'
     })
+    setCategoryForm({
+      name: '',
+    });
   } 
    } catch (error) {
       toast({

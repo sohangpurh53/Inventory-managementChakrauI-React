@@ -65,7 +65,7 @@ const OrderForm = () => {
       fetchdata()
       }else{
         setAuthenticated(false);
-        Navigate('/signin')
+        Navigate('/signin/')
       }
 
         
@@ -103,6 +103,13 @@ const OrderForm = () => {
             isClosable: true,
             position:'top-right'
           })
+          setOrderFormData({
+            customer:'',
+            order_status:'pending',
+            product:'',
+            price:'',
+            quantity:'',
+        })
         }
   } catch (error) {
     toast({
@@ -116,7 +123,18 @@ const OrderForm = () => {
 
 
     }
-    
+    const uniqueProductsMap = new Map();
+
+productDetail.forEach(item => {
+    if (!uniqueProductsMap.has(item.product.id)) {
+        uniqueProductsMap.set(item.product.id, item);
+    }
+});
+
+// Extract the values from the Map to get unique products
+const uniqueProducts = Array.from(uniqueProductsMap.values());
+
+
   return (
    
     <>
@@ -132,7 +150,7 @@ const OrderForm = () => {
         required
       >
       <option value="" disabled>Select a Product</option>
-      {productDetail.map(products => (
+      {uniqueProducts.map(products => (
         <option key={products.id} value={products.product.id}>
           {products.product.name}
         </option>

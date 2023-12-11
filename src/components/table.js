@@ -61,7 +61,7 @@ const TableData = () => {
       fetchData();
     }else{
       setAuthenticated(false);
-      Navigate('/signin') 
+      Navigate('/signin/') 
     }
     // Clear the timeout if component is unmounted
      return () => clearTimeout(loadingTimeout);
@@ -101,11 +101,11 @@ maxW={{base:'250px', md:'md', lg:'100%'}}
   
     > 
     {/* purchase */} 
-    <Box  overflowX={'auto'} mb={{ base: 5, md: 0 }}>
-        <Heading size={{base:'md', md:'md', lg:'lg'}} >Purchase</Heading>
+    <Box  boxShadow={'md'}  overflowX={'auto'} mb={{ base: 5, md: 0 }}>
+        <Heading size={{base:'md', md:'md', lg:'lg'}}textAlign={'center'} >Purchase</Heading>
     <TableContainer> 
      
-     <Table color={'cyan.400'} size='sm'>
+     <Table  color={'cyan.400'} size='sm'>
     
           <Thead>
             <Tr>
@@ -136,8 +136,8 @@ maxW={{base:'250px', md:'md', lg:'100%'}}
         </Box>
         
         {/* order */}
-        <Box    overflowX={'auto'} mb={{ base: 5, md: 0 }}> 
-         <Heading  size={{base:'md', md:'md', lg:'lg'}} >Order</Heading>
+        <Box   boxShadow={'md'}  overflowX={'auto'} mb={{ base: 5, md: 0 }}> 
+         <Heading  size={{base:'md', md:'md', lg:'lg'}}textAlign={'center'} >Order</Heading>
         <TableContainer>
            
             <Table color={'cyan.400'}  size={'sm'}>
@@ -171,8 +171,8 @@ maxW={{base:'250px', md:'md', lg:'100%'}}
         </Box>
 
       {/* stock */}
-        <Box   overflowX={'auto'} mb={{ base: 5, md: 0 }}>
-          <Heading  size={{base:'md', md:'md', lg:'lg'}} >Stock</Heading>
+        <Box  boxShadow={'md'}  overflowX={'auto'} mb={{ base: 5, md: 0 }}>
+          <Heading  size={{base:'md', md:'md', lg:'lg'}}textAlign={'center'} >Stock</Heading>
           <TableContainer> 
              
              <Table color={'cyan.400'} size={'sm'}>
@@ -203,7 +203,7 @@ maxW={{base:'250px', md:'md', lg:'100%'}}
         </Box>
            
            {/* profitandloss */}
-         <Box   overflowX={'auto'} mb={{ base: 5, md: 0 }}> <Heading  size={{base:'md', md:'sm', lg:'md'}} >
+         <Box   boxShadow={'md'} overflowX={'auto'} mb={{ base: 5, md: 0 }}> <Heading textAlign={'center'}  fontSize={{base:'sm', md:'sm', lg:'md'}} >
               Profit & Loss
             </Heading>
           <TableContainer>

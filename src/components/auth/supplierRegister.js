@@ -36,7 +36,7 @@ const SupplierRegister = () => {
       setAuthenticated(true);
     }else{
       setAuthenticated(false);
-      Navigate('/signin')
+      Navigate('/signin/')
     }
     setTimeout(()=> {setIsLoading(false)},1000)
 

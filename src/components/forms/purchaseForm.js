@@ -67,7 +67,7 @@ const PurchaseForm = () => {
 
     }else{
       setAuthenticated(false);
-      Navigate('/signin')
+      Navigate('/signin/')
     }
 
 

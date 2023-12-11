@@ -50,7 +50,7 @@ const PurchaseList = () => {
        }
        else{
         setAuthenticated(false);
-        Navigate('/signin')
+        Navigate('/signin/')
        }
             
        

@@ -51,7 +51,7 @@ const OrderItemList = () => {
         loadPurchase()
       }else{
           setAuthenticated(false);
-          Navigate('/signin') 
+          Navigate('/signin/') 
         }
 
       

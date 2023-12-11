@@ -78,7 +78,7 @@ const GraphComponent = () => {
 
       }else{
         setAuthenticated(false);
-        Navigate('/signin')  
+        Navigate('/signin/')  
       }
     
   }, [accessToken, Navigate]);

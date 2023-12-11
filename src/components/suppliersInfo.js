@@ -48,7 +48,7 @@ const SuppliersInfo = () => {
         fetchSupplier()
       }else{
         setAuthenticated(false);
-        Navigate('/signin')
+        Navigate('/signin/')
       }
 
       // Clear the timeout if component is unmounted

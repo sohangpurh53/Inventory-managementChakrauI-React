@@ -55,7 +55,7 @@ const StockList = () => {
       }
       else{
         setAuthenticated(false);
-        Navigate('/signin') 
+        Navigate('/signin/') 
       }
      
         
@@ -98,7 +98,7 @@ const StockList = () => {
       <Box flex={{ base: '1', md: '2' }}>
         <strong>Quantity:</strong> {stock.quantity}
       </Box>    
-      <Box> <Button color={'gray.400'} _hover={{bg:'gray.200', color:'gray.400'}} as={Link} to={`/stock/${stock.id}/update`} className="bi bi-pencil-square update-icon">Update</Button>  </Box>
+      <Box> <Button  bg={'blue.400'} _hover={{bg:'blue.600', color:'gray.400'}} as={Link} to={`/stock/${stock.id}/update`} className="bi bi-pencil-square update-icon">Update</Button>  </Box>
       
     </Stack>
   ))} 

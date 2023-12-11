@@ -37,7 +37,7 @@ const CustomerRegister = () => {
       setAuthenticated(true);
     }else{
       setAuthenticated(false);
-      Navigate('/signin')
+      Navigate('/signin/')
     }
 
   }, [accessToken, Navigate]);
@@ -70,13 +70,16 @@ const CustomerRegister = () => {
       }
 
     } catch (error) {
-      toast({
+      if(error){
+        toast({
         title: 'Please check all required field.',
-        status: 'success',
+        status: 'warning',
         duration: 5000,
         position:'top-right',
         isClosable: true,
       })
+      }
+      
       setIsLoading(false)
     }
   };

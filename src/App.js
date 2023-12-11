@@ -14,7 +14,7 @@ import UpdatePurchase from './components/forms/updatePurchase'
 import PurchaseList from './components/Purchase';
 import SignInComponent from './components/auth/signIn';
 import SignOutComponent from './components/auth/signOut';
-import './App.css'
+// import './App.css'
 import CategoryList from './components/Categories';
 import CategoryUpdateForm from './components/forms/updateCategory';
 import DeleteCategory from './components/forms/deleteCategoryComponent';
@@ -31,22 +31,23 @@ import SuppliersInfo from './components/suppliersInfo';
 import Table from './components/table';
 import AdminDashboard from './components/Dashboard';
 import NavBar from './components/Header';
+import { Box } from '@chakra-ui/react';
 function App() {
   return (
     <>
       <Router>
         <NavBar/>
-        <div className="app-container">
+        <Box minH={'100vh'}>
         <Routes>
-          <Route path="/customer/form" element={<CustomerRegister />} />
-          <Route path="/supplier/form" element={<SupplierRegister />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/order" element={<OrderItemList />} />
-          <Route path="/category" element={<CategoryList/>} />
-          <Route path="/purchase/form" element={<PurchaseForm />} />
-          <Route path="/product/form" element={<ProductForm />} />
-          <Route path="/order/form" element={<OrderForm />} />
-          <Route path="/category/form" element={<CategoryForm />} />
+          <Route path="/customer/form/" element={<CustomerRegister />} />
+          <Route path="/supplier/form/" element={<SupplierRegister />} />
+          <Route path="/product/" element={<Product />} />
+          <Route path="/order/" element={<OrderItemList />} />
+          <Route path="/category/" element={<CategoryList/>} />
+          <Route path="/purchase/form/" element={<PurchaseForm />} />
+          <Route path="/product/form/" element={<ProductForm />} />
+          <Route path="/order/form/" element={<OrderForm />} />
+          <Route path="/category/form/" element={<CategoryForm />} />
           {/* <Route path="/dashboard" element={ <Home />} /> */}
           <Route  path="/product/:id/update" element={<ProductUpdate />} />
           <Route path="/customer/:id/update" element={<UpdateCustomer />} />
@@ -59,16 +60,16 @@ function App() {
           <Route path="/purchase/:id/delete" element={<DeletePurchase />} />
           <Route path="/order/:id/update" element={<OrderUpdateForm />} />
           <Route path="/purchase" element={<PurchaseList />} />
-          <Route path="/stock" element={<StockList />} />
-          <Route path="/customer" element={<CustomersInfo />} />
-          <Route path="/inventory" element={<Table />} />
-          <Route path="/supplier" element={<SuppliersInfo />} />
-          <Route path="/signin" element={<SignInComponent />} />
-          <Route path="/signout" element={<SignOutComponent />} />
+          <Route path="/stock/" element={<StockList />} />
+          <Route path="/customer/" element={<CustomersInfo />} />
+          <Route path="/inventory/" element={<Table />} />
+          <Route path="/supplier/" element={<SuppliersInfo />} />
+          <Route path="/signin/" element={<SignInComponent />} />
+          <Route path="/signout/" element={<SignOutComponent />} />
           <Route path="/" element={<AdminDashboard />} />
            
         </Routes>
-        </div>
+        </Box>
       <Footer/>
       </Router> 
     </>

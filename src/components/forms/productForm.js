@@ -73,7 +73,7 @@ const ProductForm = () => {
 
     }else{
       setAuthenticated(false);
-      Navigate('/signin')
+      Navigate('/signin/')
     }
 
   
@@ -125,6 +125,14 @@ const ProductForm = () => {
           duration: 5000,
           position:'top-right',
           isClosable: true,
+        })
+        setProductform({
+          name: '',
+          category: '',
+          description: '',
+          image: null,
+          price: '',
+          supplier: '',
         })
       } 
     } catch (error) {

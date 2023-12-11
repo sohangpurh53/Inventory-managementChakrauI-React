@@ -48,7 +48,7 @@ const Product = () => {
       fetchData();
     } else {
       setAuthenticated(false);
-      Navigate('/signin')
+      Navigate('/signin/')
     }
   }, [accessToken, currentPage, Navigate]);
 

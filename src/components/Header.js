@@ -79,7 +79,7 @@ const Navbar = () => {
  return (
     <Flex as="nav" align="center" bg="blue.500"color={'white'} justify="space-between" wrap="wrap" padding="1.5rem">
       <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={"-.1rem"}>
+        <Heading as="h1" size={{base:"md", md:'md', lg:'lg'}}>
           <Link to="/" _focus={{ boxShadow: 'none' }}>
            Inventory-Management
           </Link>
@@ -131,8 +131,10 @@ const Navbar = () => {
           position={'absolute'}
           right={{base:'10'}}
           aria-label="Toggle Theme"
-          icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
+          icon={colorMode === 'light' ? <FaMoon  /> : <FaSun />}
           onClick={toggleColorMode}
+          color={'yellow.400'}
+         
         />
       </Stack>
     </Flex>

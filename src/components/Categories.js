@@ -52,7 +52,7 @@ const CategoryList = () => {
        }
        else{
         setAuthenticated(false);
-        Navigate( '/signin')
+        Navigate( '/signin/')
        }
             
        

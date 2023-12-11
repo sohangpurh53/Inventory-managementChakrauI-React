@@ -13,8 +13,9 @@ import {
   Th,
   Td,
 
-TableCaption,
+Heading,
 Flex,
+
 
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
@@ -90,16 +91,22 @@ const TableData = () => {
          
           
 <Flex
-mx={'auto'}
-     mt={5}
-     wrap={'wrap'}
-     flexDirection={{base:'row', md:'column', lg:'row'}}
+//  w={{ base: '100%', md: '80%', lg: '60%' }}
+ mx="auto"
+ mt={5}
+ justifyContent={'center'}
+maxW={{base:'250px', md:'md', lg:'100%'}}
+ gap={5}
+ flexWrap="wrap"
+  
     > 
-    {/* purchase */}
-    <Box mr={2}>  
-    <TableContainer>
-     <Table size={'md'}>
-     <TableCaption >Purchase</TableCaption>
+    {/* purchase */} 
+    <Box  overflowX={'auto'} mb={{ base: 5, md: 0 }}>
+        <Heading size={{base:'md', md:'md', lg:'lg'}} >Purchase</Heading>
+    <TableContainer> 
+     
+     <Table color={'cyan.400'} size='sm'>
+    
           <Thead>
             <Tr>
               <Th>Product Name</Th>
@@ -129,10 +136,12 @@ mx={'auto'}
         </Box>
         
         {/* order */}
-        <Box mr={2}> 
-        <TableContainer> 
-            <Table size={'md'}>
-            <TableCaption>Order</TableCaption>
+        <Box    overflowX={'auto'} mb={{ base: 5, md: 0 }}> 
+         <Heading  size={{base:'md', md:'md', lg:'lg'}} >Order</Heading>
+        <TableContainer>
+           
+            <Table color={'cyan.400'}  size={'sm'}>
+           
           <Thead>
             <Tr>
               <Th>Product Name</Th>
@@ -162,10 +171,12 @@ mx={'auto'}
         </Box>
 
       {/* stock */}
-        <Box mr={2}>
+        <Box   overflowX={'auto'} mb={{ base: 5, md: 0 }}>
+          <Heading  size={{base:'md', md:'md', lg:'lg'}} >Stock</Heading>
           <TableContainer> 
-             <Table size={'md'}>
-             <TableCaption>Stock</TableCaption>
+             
+             <Table color={'cyan.400'} size={'sm'}>
+            
           <Thead>
             <Tr>
               <Th>Product Name</Th>
@@ -192,12 +203,12 @@ mx={'auto'}
         </Box>
            
            {/* profitandloss */}
-         <Box mr={2}>
-          <TableContainer>
-          <Table size={'md'}>
-            <TableCaption>
+         <Box   overflowX={'auto'} mb={{ base: 5, md: 0 }}> <Heading  size={{base:'md', md:'sm', lg:'md'}} >
               Profit & Loss
-            </TableCaption>
+            </Heading>
+          <TableContainer>
+          <Table color={'cyan.400'} size={'sm'}>
+           
           <Thead>
             <Tr>
               <Th>Purchase Price Per Unit</Th>

@@ -83,7 +83,7 @@ const CategoryList = () => {
     maxW="lg" 
     minH={'md'}
   >
- <Table variant={'simple'} color={'blue.400'} colorScheme='gray' size='sm'>
+ <Table variant={'simple'}  color={'blue.500'} size='sm'>
 <Thead  >
 <Tr >
   <Th>Category Name</Th>
@@ -94,7 +94,7 @@ const CategoryList = () => {
 {categoryDetail.map(category => ( 
  <Tr key={category.id}>
   <Td> {category.name}</Td>
-  <Td> <Button  bg={'blue.50'}  fontSize={'sm'}  as={Link}  to={`/category/${category.id}/update`} >Update</Button> </Td>
+  <Td> <Button  bg={'gray.200'} color={'black'}  _hover={{bg:'gray.400'}} fontSize={'sm'}  as={Link}  to={`/category/${category.id}/update`} >Update</Button> </Td>
   <Td>  <Button bg={'red.400'} _hover={{bg:'red.600'}} fontSize={'sm'}  color={'white'} as={Link} to={`/category/${category.id}/delete`}>Delete</Button> </Td> 
 </Tr> ))} 
 </Tbody>

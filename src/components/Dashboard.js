@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductForm from './forms/productForm';
 import PurchaseForm from './forms/purchaseForm';
 import OrderForm from './forms/orderForm';
@@ -19,10 +19,19 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
   // import { BiSidebar } from 'react-icons/bi';
   import { CloseIcon } from '@chakra-ui/icons';
   import { CgMenuGridO } from "react-icons/cg";
+import Loading from './isLoading';
 
   const AdminDashboard = () => {
     const { isOpen, onToggle } = useDisclosure();
     const [activeComponent, setActiveComponent] = useState('TableDisplay');
+    const [isLoading, setIsLoading] = useState(true)
+
+
+    useEffect(()=>{
+     
+      setTimeout(()=>{ setIsLoading(false)},1000)
+
+    },[])
 
     const handleClick = (componentName) => {
       setActiveComponent(componentName);
@@ -68,19 +77,23 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
   
   
     return (
-      <>
 
-  
+
+       isLoading? <Loading/> : 
     <Box
           display="flex"
           flexDirection={{ base: 'column', md: 'row' }}
           minH="100vh"
+          
         >
   
-          <HStack  p="4" bg="gray.700" color="white" w={{ base: '100%', md: '7.5%', lg:'5%' }}>
+          <HStack  p="4"   bg={'gray.300'} color="white" w={{ base: '100%', md: '7.5%', lg:'5%' }}>
             <IconButton
             icon={isOpen ? <CloseIcon />: <CgMenuGridO  />
            }
+           bg={'blackAlpha.400'}
+           _hover={{bg:'blackAlpha.600'}}
+           color={'white'}
               onClick={onToggle}
               aria-label="Toggle Navigation Bar"
               mx={'auto'}
@@ -90,7 +103,7 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
           <VStack
             spacing={4}
             align="start"
-            bg="gray.700"
+            bg="gray.50"
             color="white"
             width={isOpen ? { base: '100%', md: '20%' } : '0'}
             p="4"
@@ -101,20 +114,20 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
           >
             {isOpen && (
               <>
-                 <Button w={'100%'} onClick={() => handleClick('ProductForm')}>Create-Product</Button>
-                  <Button w={'100%'} onClick={() => handleClick('PurchaseForm')}>Create-Purchase</Button>
-                  <Button w={'100%'} onClick={() => handleClick('OrderForm')}>Create-Order</Button>
-                  <Button w={'100%'} onClick={() => handleClick('CategoryForm')}>Create-Category</Button>
-                  <Button w={'100%'} onClick={() => handleClick('CustomerForm')}>Create-Customer</Button>
-                  <Button w={'100%'} onClick={() => handleClick('SupplierForm')}>Create-Supplier</Button>
-                  <Button w={'100%'} onClick={() => handleClick('Category')}>Category</Button>
-                  <Button w={'100%'} onClick={() => handleClick('Product')}>Product</Button>
-                  <Button w={'100%'} onClick={() => handleClick('PurchaseList')}>Purchase</Button>
-                  <Button w={'100%'} onClick={() => handleClick('StockList')}>Stock</Button>
-                  <Button w={'100%'} onClick={() => handleClick('OrderItemList')}>Order</Button>
-                  <Button w={'100%'} onClick={() => handleClick('SuppliersInfo')}>Supplier</Button>
-                  <Button w={'100%'} onClick={() => handleClick('CustomersInfo')}>Customer</Button>
-                  <Button w={'100%'} onClick={() => handleClick('TableInfo')}>Inventory</Button>
+                 <Button bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('ProductForm')}>Create-Product</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('PurchaseForm')}>Create-Purchase</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('OrderForm')}>Create-Order</Button>
+                  <Button bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}   w={'100%'} onClick={() => handleClick('CategoryForm')}>Create-Category</Button>
+                  <Button bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('CustomerForm')}>Create-Customer</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('SupplierForm')}>Create-Supplier</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('Category')}>Category</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('Product')}>Product</Button>
+                  <Button   bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}} w={'100%'} onClick={() => handleClick('PurchaseList')}>Purchase</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('StockList')}>Stock</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('OrderItemList')}>Order</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('SuppliersInfo')}>Supplier</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('CustomersInfo')}>Customer</Button>
+                  <Button  bg={'blue.300'} color={'white'} _hover={{bg:'blue.500'}}  w={'100%'} onClick={() => handleClick('TableInfo')}>Inventory</Button>
               </>
             )}
           </VStack>
@@ -126,7 +139,7 @@ import { Box,VStack,HStack, Button,   IconButton,  useDisclosure, } from '@chakr
         </Box>
 
         
-      </>
+     
     );
   };
   

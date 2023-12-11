@@ -105,7 +105,7 @@ const PurchaseList = () => {
         <strong>Quantity:</strong> {purchase.quantity}
       </Box>
       <Box> <Button className="bi bi-pencil-square" to={`/purchase/${purchase.id}/update`} as={Link}> Edit</Button></Box>
-      <Box> <Button bg={'red.400'} color={'white'} className="bi bi-trash" to={`/purchase/${purchase.id}/delete`} as={Link}> Delete</Button> </Box>
+      <Box> <Button bg={'red.400'} _hover={{bg:'red.600'}} color={'white'} className="bi bi-trash" to={`/purchase/${purchase.id}/delete`} as={Link}> Delete</Button> </Box>
     </Stack>
   ))} 
            <Flex align="center" justify="center" mt={4} w="100%">
@@ -114,7 +114,7 @@ const PurchaseList = () => {
         Previous
       </Button>
     )}
-    <Box  mx={2}>
+    <Box padding={2} boxShadow={'md'}   mx={2}>
       Page&nbsp;{currentPage}
     </Box>
     {hasNextPage && (

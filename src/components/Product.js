@@ -98,13 +98,13 @@ const Product = () => {
         <strong>Price:</strong> {product.price}
       </Box>
       <Box> <Button className="bi bi-pencil-square" to={`/product/${product.id}/update`} as={Link}> Edit</Button></Box>
-      <Box> <Button bg={'red.400'} color={'white'} className="bi bi-trash" to={`/product/${product.id}/delete`} as={Link}> Delete</Button> </Box>
+      <Box> <Button bg={'red.400'} _hover={{bg:'red.600'}} color={'white'} className="bi bi-trash" to={`/product/${product.id}/delete`} as={Link}> Delete</Button> </Box>
     </Stack>
   ))} 
             <Flex align="center" justify="center" mt={4} w="100%">
-              {hasPrevPage && <button onClick={handlePrevPage}>Previous</button>}
-              <Box> Page&nbsp;{currentPage}</Box>
-              {hasNextPage && <button onClick={handleNextPage}>Next</button>}
+              {hasPrevPage && <Button onClick={handlePrevPage}>Previous</Button>}
+              <Box padding={2} boxShadow={'md'} >  Page&nbsp;{currentPage}</Box>
+              {hasNextPage && <Button onClick={handleNextPage}>Next</Button>}
             </Flex>
 </Box>
             

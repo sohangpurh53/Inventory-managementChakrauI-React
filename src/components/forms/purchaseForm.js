@@ -107,6 +107,11 @@ const PurchaseForm = () => {
             position:'top-right',
             isClosable: true,
           })
+         setPurchaseForm({
+            supplier:'',
+            product:'',
+            quantity:'',
+        })
           
           } 
       } catch (error) {

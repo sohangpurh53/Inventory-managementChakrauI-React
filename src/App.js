@@ -1,7 +1,7 @@
 import SupplierRegister from './components/auth/supplierRegister'
 import CustomerRegister from './components/auth/customerRegister'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
+// import Header from './components/Header';
 import Footer from './components/Footer';
 // import Home from './components/Home';
 import Product from './components/Product';
@@ -30,11 +30,12 @@ import CustomersInfo from './components/customerInfo';
 import SuppliersInfo from './components/suppliersInfo';
 import Table from './components/table';
 import AdminDashboard from './components/Dashboard';
+import NavBar from './components/Header';
 function App() {
   return (
     <>
       <Router>
-        <Header/>
+        <NavBar/>
         <div className="app-container">
         <Routes>
           <Route path="/customer/form" element={<CustomerRegister />} />

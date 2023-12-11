@@ -1,17 +1,29 @@
 // ProductUpdateForm.js
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance'
-import NotificationComponent from '../Notification';
 import { useAuth } from '../../context/AuthContext';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+useToast,
+  Button,
+  Heading,
+  Flex,
+  
+
+
+} from '@chakra-ui/react'
 
 const CategoryUpdateForm = () => {
   const {accessToken} = useAuth()
-  const [notificationMessage, setNotificationMessage] = useState('');
   const { id } = useParams();
   const [category, setCategory] = useState({
     name: '',
   });
+  const toast = useToast()
+  const Navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,42 +53,57 @@ const CategoryUpdateForm = () => {
 
   // Implement the rest of your update form here, similar to the create form but with pre-filled values from `product`
 
-  const updateCategory = (e) => {
+  const updateCategory = async(e) => {
     e.preventDefault();
 
     const formDataToSend = new FormData();
     formDataToSend.append('name', category.name);
- 
-
-    axiosInstance.put(`dashboard/category/${id}/update/`, formDataToSend, {headers: {
+ try {
+  const response = await axiosInstance.put(`dashboard/category/${id}/update/`, formDataToSend, {headers: {
       Authorization: `Bearer ${accessToken}`,
   
   }})
-      .then(response => {
-        if (response.data) {
-          setNotificationMessage('Category Entry Updated successfully!');
-          setTimeout(() => {
-            setNotificationMessage(''); // Reset notification after 5 seconds
-          }, 2500);
-        } else {
-          setNotificationMessage('Failed to create entry.');
-        }
-      })
-      .catch(error => console.error('Error updating category:', error));
+  if(response.data){
+    toast({
+      title: 'Category Updated Successfully',
+      status: 'success',
+      duration: 5000,
+      position:'top-right',
+      isClosable: true,
+    })
+    setTimeout(() => {
+      Navigate('/')
+    }, 2000);
+  }
+ } catch (error) {
+  if(error){
+    toast({
+    title: 'Please check all require field',
+    status: 'info',
+    duration: 5000,
+    position:'top-right',
+    isClosable: true,
+  })
+  }
+  
+ }
+
+   
+      
+    
   };
 
   return (
-    <div className='body'>
-      <fieldset className="container-form">
-      <NotificationComponent message={notificationMessage} />
-        <legend> <h3>Update Category</h3></legend>
+    <>
+      <Flex maxW={{base:'md', md:'md', lg:'lg'}} mx={'auto'} wrap={'wrap'}>
+        <Heading size={{base:'sm', lg:'lg'}}>Update Category</Heading>
 
 
-        <form encType="multipart/form-data">
+       
 
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input
+          <FormControl isRequired>
+            <FormLabel >Name:</FormLabel>
+            <Input
               type="text"
 
               name="name"
@@ -84,14 +111,14 @@ const CategoryUpdateForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
         
-          <button onClick={updateCategory}>Update Category</button>
+          <Button bg={'blue.400'} _hover={{bg:'blue.600'}} color={'white'} onClick={updateCategory}>Update Category</Button>
 
-        </form>
-        </fieldset>
-    </div>
+       
+        </Flex>
+    </>
   );
 };
 

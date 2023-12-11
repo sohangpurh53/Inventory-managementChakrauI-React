@@ -97,6 +97,7 @@ const PurchaseForm = () => {
        const response = await axiosInstance.post('purchase/create/', 
           formDataToSend, {headers: {
             Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'multipart/form-data',
         
         }})
         if(response.request.status===201) {
@@ -117,7 +118,7 @@ const PurchaseForm = () => {
       } catch (error) {
           toast({
           title: `Please check all require fields`,
-          status: 'warning',
+          status: 'info',
           duration: 5000,
           isClosable: true,
           position:'top-rght'

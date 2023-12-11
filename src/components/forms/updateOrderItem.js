@@ -2,12 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance'
-import NotificationComponent from '../Notification';
 import { useAuth } from '../../context/AuthContext';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+useToast,
+Select,
+  Button,
+  Heading,
+  Flex,
+
+
+} from '@chakra-ui/react'
 
 const OrderUpdateForm = () => {
   const {accessToken} = useAuth()
-  const [notificationMessage, setNotificationMessage] = useState('');
   const { id } = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
   const [orderItemDetails, setOrderItemDetails] = useState({
@@ -16,6 +26,7 @@ const OrderUpdateForm = () => {
     quantity:'',
   });
   const  Navigate = useNavigate()
+  const toast = useToast()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +58,7 @@ const OrderUpdateForm = () => {
 
   // Implement the rest of your update form here, similar to the create form but with pre-filled values from `product`
 
-  const updateOrder = (e) => {
+  const updateOrder = async (e) => {
     e.preventDefault();
 
     const formDataToSend = new FormData();
@@ -55,39 +66,54 @@ const OrderUpdateForm = () => {
     formDataToSend.append('quantity', orderItemDetails.quantity);
     formDataToSend.append('price', orderItemDetails.price);
 
-   
-
-    axiosInstance.put(`dashboard/orderitem/${id}/update/`, formDataToSend, {headers: {
+   try {
+     const response = axiosInstance.put(`dashboard/orderitem/${id}/update/`, formDataToSend, {headers: {
       Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
   
   }})
-      .then(response => {
+      
         if (response.data) {
-          setNotificationMessage('Order Entry Updated successfully!');
+          toast({
+            title: 'Order Updated Successfully',
+            status: 'success',
+            duration: 5000,
+            position:'top-right',
+            isClosable: true,
+          })
           setTimeout(() => {
-            setNotificationMessage(''); // Reset notification after 5 seconds
             Navigate('/')
-          }, 2500);
-        } else {
-          setNotificationMessage('Failed to create entry.');
+          }, 2000);
         }
-      })
-      .catch(error => console.error('Error updating product:', error));
+   } catch (error) {
+    if(error){
+      toast({
+      title: 'Category Updated Successfully',
+      status: 'info',
+      duration: 5000,
+      position:'top-right',
+      isClosable: true,
+    })
+    }
+    
+   }
+
+
   };
 
   return (
-    <div className='body'>
-      <fieldset className="container-form">
-      <NotificationComponent message={notificationMessage} />
-        <legend> <h3>Update Order Item</h3></legend>
+    <Flex maxW={{base:'md', md:'md', lg:'lg'}} wrap={'wrap'} mx={'auto'}>
+      
+      
+        <Heading textAlign={'center'} size={{base:'sm', lg:'lg'}}>Update Order Item</Heading>
 
 
-        <form encType="multipart/form-data">
+       
 
       
-          <div>
-            <label htmlFor="product">Product:</label>
-            <select
+          <FormControl isRequired>
+            <FormLabel >Product:</FormLabel>
+            <Select
               name="product"
               value={orderDetails.product}
               onChange={handleChange}
@@ -99,15 +125,15 @@ const OrderUpdateForm = () => {
                   {order.product.name}
                 </option>
               ))}
-            </select>
-          </div>
+            </Select>
+          </FormControl>
 
 
 
          
-          <div>
-            <label htmlFor="quantity">Quantity:</label>
-            <input
+          <FormControl isRequired>
+            <FormLabel >Quantity:</FormLabel>
+            <Input
               type="number"
 
               name="quantity"
@@ -115,10 +141,10 @@ const OrderUpdateForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
-          <div>
-       <label htmlFor="price">Price:</label>
-       <input
+          </FormControl>
+          <FormControl>
+       <FormLabel isRequired>Price:</FormLabel>
+       <Input
          type="number"
         
          name="price"
@@ -126,14 +152,14 @@ const OrderUpdateForm = () => {
          onChange={handleChange}
          required
        />
-     </div>
+     </FormControl>
          
 
-          <button onClick={updateOrder}>Update Order</button>
+          <Button onClick={updateOrder}>Update Order</Button>
 
-        </form>
-        </fieldset>
-    </div>
+      
+       
+    </Flex>
   );
 };
 

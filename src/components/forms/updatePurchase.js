@@ -1,12 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance'
-import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+useToast,
+Select,
+  Button,
+  Heading,
+  Flex,
+
+
+} from '@chakra-ui/react'
 
 const UpdatePurchase = () => {
   const {accessToken} = useAuth( )
-    const [notificationMessage, setNotificationMessage] = useState('');
     const [suppliers, setSupplier]= useState([]);
     const [products, setProduct]= useState([]);
     const [purchase, setPurchase] = useState({
@@ -16,6 +26,7 @@ const UpdatePurchase = () => {
     });
     const { id } = useParams();
     const  Navigate = useNavigate()
+    const toast = useToast()
 
     useEffect(()=>{
       const fetchPurchase = async() =>{
@@ -63,67 +74,85 @@ const UpdatePurchase = () => {
         updateFormData.append('supplier' ,purchase.supplier);
         updateFormData.append('product' ,purchase.product);
         updateFormData.append('quantity' ,purchase.quantity);
-        await axiosInstance.put(`dashboard/purchase/${id}/update/`,updateFormData,{headers: {
+
+        try {
+           const response = await axiosInstance.put(`dashboard/purchase/${id}/update/`,updateFormData,{headers: {
               Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'multipart/form-data',
           
-          }}).then(response => {if (response.data) {
-          setNotificationMessage(`Purchase Entry Upadted successfully!`);
-          setTimeout(() => {
-            setNotificationMessage(''); // Reset notification after 5 seconds
-            Navigate('/') 
-          }, 3000);
-        } else {
-          setNotificationMessage('Failed to create entry.');
-        }})
-        .catch((error) => console.log(`Error while submit purhase update form: ${error}`));
+          }})
+          if(response.data){
+            toast({
+              title: 'Purchase Updated Successfully',
+              status: 'success',
+              duration: 5000,
+              position:'top-right',
+              isClosable: true,
+            })
+            setTimeout(() => {
+              Navigate('/')
+            }, 2000);
+          }
+        } catch (error) {
+          toast({
+            title: 'Purchase Updated Successfully',
+            status: 'success',
+            duration: 5000,
+            position:'top-right',
+            isClosable: true,
+          })
+        }
+       
 
     };
 
 
 
   return (
-    <div className='body'>
-      <fieldset className='container-form'>    
-      <NotificationComponent message={notificationMessage} />
+    <Flex maxW={{base:'md', md:'md', lg:'lg'}} wrap={'wrap'} mx={'auto'}>
+      
 
-        <legend>
+        <Heading textAlign={'center'} size={{base:'sm', lg:'lg'}}>
           Purchase Update
-        </legend>
-         <form>
-          <label htmlFor="supplier">Supplier</label>
-          <select name="supplier" value={purchase.supplier} onChange={handleChange} required>
+        </Heading>
+         
+       <FormControl isRequired>
+         <FormLabel htmlFor="supplier">Supplier</FormLabel>
+          <Select name="supplier" value={purchase.supplier} onChange={handleChange} required>
             <option value="" disabled> Select Supplier </option>
             {suppliers.map(supplier=>{
               return <option key={supplier.id} value={supplier.id}>{supplier.full_name}</option>
             })}
-          </select>
+          </Select>
+       </FormControl>
 
-
-
-          <label htmlFor="product">Product</label>
-          <select name="product" value={purchase.product} onChange={handleChange} required>
+       <FormControl isRequired>
+         <FormLabel htmlFor="product">Product</FormLabel>
+          <Select name="product" value={purchase.product} onChange={handleChange} required>
             <option value='' disabled> Select Product </option>
             {products.map(product=>{
               return <option key={product.id} value={product.id}>{product.name}</option>
             })}
-          </select>
+          </Select>
+       </FormControl>
 
-
-          <label htmlFor="quantity">Quantity</label>
-          <input required value={purchase.quantity}
-          name='quantity'
-          onChange={handleChange}
-           type="number" />
-           <button onClick={handleSubmit}>Update Purchase</button>
-        </form>
+       <FormControl isRequired>
+      <FormLabel htmlFor="quantity">Quantity</FormLabel>
+                <Input required value={purchase.quantity}
+                name='quantity'
+                onChange={handleChange}
+                type="number" />
+            </FormControl>        
+           <Button color={'white'} bg={'green.400'} _hover={{bg:'green.600'}} onClick={handleSubmit}>Update Purchase</Button>
        
-      </fieldset>
+       
+  
    
 
 
 
 
-    </div>
+    </Flex>
   )
 }
 

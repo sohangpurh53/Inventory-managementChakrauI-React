@@ -154,7 +154,7 @@ const ProductForm = () => {
       {isLoading? (<Loading/>):(authenticated &&( <Flex wrap={'wrap'} boxShadow={'md'} padding={5} justifyContent={'center'}  mx={'auto'} maxW={{base:'md', md:'md', lg:'lg'}}>
 
  <Heading mx={'auto'}  size={'lg'} color={'blackAlpha.200'}> Product </Heading>
-          <FormControl >
+          <FormControl isRequired>
             <FormLabel >Name:</FormLabel>
             <Input
               type="text"
@@ -166,7 +166,7 @@ const ProductForm = () => {
             />
           </FormControl>
 
-          <FormControl  >
+          <FormControl  isRequired>
             <FormLabel >Category:</FormLabel>
             <Select
               name="category"
@@ -183,7 +183,7 @@ const ProductForm = () => {
             </Select>
           </FormControl>
 
-          <FormControl  >
+          <FormControl  isRequired>
             <FormLabel >Description:</FormLabel>
             <Input
               type="text"
@@ -195,7 +195,7 @@ const ProductForm = () => {
             />
           </FormControl>
 
-          <FormControl  >
+          <FormControl  isRequired>
             <FormLabel >Image:</FormLabel>
             <Input
               type="file"
@@ -206,7 +206,7 @@ const ProductForm = () => {
             />
           </FormControl>
 
-          <FormControl  >
+          <FormControl  isRequired>
             <FormLabel >Price:</FormLabel>
             <Input
               type="number"
@@ -218,7 +218,7 @@ const ProductForm = () => {
             />
           </FormControl>
 
-          <FormControl  >
+          <FormControl  isRequired>
             <FormLabel >Supplier:</FormLabel>
             <Select
               name="supplier"

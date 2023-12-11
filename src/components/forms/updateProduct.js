@@ -2,12 +2,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance'
-import NotificationComponent from "../Notification";
 import { useAuth } from '../../context/AuthContext';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+useToast,
+Select,
+  Button,
+  Heading,
+  Flex,
+  
+
+
+} from '@chakra-ui/react'
 
 const ProductUpdateForm = () => {
   const {accessToken} = useAuth()
-  const [notificationMessage, setNotificationMessage] = useState('');
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [supplierOptions, setSupplierOptions] = useState([]);
   const { id } = useParams();
@@ -20,6 +31,8 @@ const ProductUpdateForm = () => {
     supplier: '',
   });
   const  Navigate = useNavigate()
+  const toast = useToast()
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +76,7 @@ const ProductUpdateForm = () => {
 
   // Implement the rest of your update form here, similar to the create form but with pre-filled values from `product`
 
-  const updateProduct = (e) => {
+  const updateProduct = async (e) => {
     e.preventDefault();
 
     const formDataToSend = new FormData();
@@ -73,38 +86,52 @@ const ProductUpdateForm = () => {
     formDataToSend.append('image', product.image);
     formDataToSend.append('price', product.price);
     formDataToSend.append('supplier', product.supplier);
-
-    axiosInstance.put(`dashboard/product/${id}/update/`, formDataToSend,{headers: {
+try {
+  const response = axiosInstance.put(`dashboard/product/${id}/update/`, formDataToSend,{headers: {
       Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
   
   }})
-      .then(response => {if (response.data) {
-        setNotificationMessage(`Product Entry Updated successfully!`);
-        setTimeout(() => {
-          setNotificationMessage(''); // Reset notification after 5 seconds
-          Navigate('/')
-        }, 3000);
-      } else {
-        setNotificationMessage('Failed to create entry.');
-      }}
-      )
-      .catch(error => console.error('Error updating product:', error));
+  if (response.data) {
+    toast({
+      title: 'Product Updated Successfully',
+      status: 'success',
+      duration: 5000,
+      position:'top-right',
+      isClosable: true,
+    })
+    setTimeout(() => {
+      Navigate('/')
+    }, 2000);
+       }
+     
+} catch (error) {
+  toast({
+    title: 'Please cheak all require field',
+    status: 'info',
+    duration: 5000,
+    position:'top-right',
+    isClosable: true,
+  })
+}
+   
+      
+     
      
   };
 
   return (
-    <div className='body'>
-      <fieldset className="container-form">
-      <NotificationComponent message={notificationMessage} />
+    <Flex maxW={{base:'md', md:'md', lg:'lg'}} wrap={'wrap'} mx={'auto'}>
+      
+    
+        <Heading textAlign={'center'} size={{base:'sm', lg:'lg'}}> <h3>Update Product</h3></Heading>
 
-        <legend> <h3>Update Product</h3></legend>
 
+        
 
-        <form encType="multipart/form-data">
-
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input
+          <FormControl isRequired>
+            <FormLabel htmlFor="name">Name:</FormLabel>
+            <Input
               type="text"
 
               name="name"
@@ -112,11 +139,11 @@ const ProductUpdateForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="category">Category:</label>
-            <select
+          <FormControl isRequired>
+            <FormLabel htmlFor="category">Category:</FormLabel>
+            <Select
               name="category"
               value={product.category}
               onChange={handleChange}
@@ -128,12 +155,12 @@ const ProductUpdateForm = () => {
                   {category.name}
                 </option>
               ))}
-            </select>
-          </div>
+            </Select>
+          </FormControl>
 
-          <div>
-            <label htmlFor="description">Description:</label>
-            <input
+          <FormControl isRequired>
+            <FormLabel htmlFor="description">Description:</FormLabel>
+            <Input
               type="text"
 
               name="description"
@@ -141,21 +168,21 @@ const ProductUpdateForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="image">Image:</label>
-            <input
+          <FormControl>
+            <FormLabel htmlFor="image">Image:</FormLabel>
+            <Input
               type="file"
               name="image"
               onChange={handleImageChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="name">Price:</label>
-            <input
+          <FormControl isRequired>
+            <FormLabel htmlFor="name">Price:</FormLabel>
+            <Input
               type="number"
 
               name="price"
@@ -163,11 +190,11 @@ const ProductUpdateForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
 
-          <div>
-            <label htmlFor="supplier">Supplier:</label>
-            <select
+          <FormControl isRequired>
+            <FormLabel htmlFor="supplier">Supplier:</FormLabel>
+            <Select
               name="supplier"
               value={product.supplier}
               onChange={handleChange}
@@ -179,15 +206,15 @@ const ProductUpdateForm = () => {
                   {supplier.full_name}
                 </option>
               ))}
-            </select>
-          </div>
+            </Select>
+          </FormControl>
 
 
-          <button onClick={updateProduct}>Update Product</button>
+          <Button color={'white'} bg={'green.400'} _hover={{bg:'green.600'}} onClick={updateProduct}>Update Product</Button>
 
-        </form>
-        </fieldset>
-    </div>
+      
+      
+    </Flex>
   );
 };
 

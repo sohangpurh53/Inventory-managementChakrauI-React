@@ -4,6 +4,18 @@ import { useNavigate, useParams } from 'react-router-dom'
 import '../auth/supplier.css'
 import NotificationComponent from '../Notification';
 import { useAuth } from '../../context/AuthContext';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+useToast,
+Select,
+  Button,
+  Heading,
+  Flex,
+
+
+} from '@chakra-ui/react'
 
 const UpdateSupplier = () => {
   const {accessToken} = useAuth()
@@ -16,6 +28,7 @@ const UpdateSupplier = () => {
     mobile_no: ''
   })
   const  Navigate = useNavigate()
+  const toast = useToast()
 
     useEffect(()=> {
         const fetchCustomer = async ()=>{
@@ -43,78 +56,86 @@ const UpdateSupplier = () => {
             e.preventDefault();
         
             try {
-              await axiosInstance.put(`dashboard/supplier/${id}/update/`, supplierDetails, {headers: {
+             const response =  await axiosInstance.put(`dashboard/supplier/${id}/update/`, supplierDetails, {headers: {
                 Authorization: `Bearer ${accessToken}`,
             
-            }}).then(response => {
-                if (response.data) {
-                  setNotificationMessage('Supplier Entry Updated successfully!');
-                  setTimeout(() => {
-                    setNotificationMessage(''); // Reset notification after 5 seconds
-                    Navigate('/')
-                  }, 2500);
-                } else {
-                  setNotificationMessage('Failed to create entry.');
-                }
-              });
+            }})
+            if(response.data){
+              toast({
+                title: 'Supplier Updated Successfully',
+                status: 'success',
+                duration: 5000,
+                position:'top-right',
+                isClosable: true,
+              })
+            }
+            setTimeout(() => {
+              Navigate('/')
+            }, 2000);
              
             } catch (error) {
-              console.error('Error:', error);
+              toast({
+                title: 'Please check all require fields',
+                status: 'info',
+                duration: 5000,
+                position:'top-right',
+                isClosable: true,
+              })
             }
           };
  
 
   return (
     <>
-       <div className="container-auth">
-       <NotificationComponent message={notificationMessage} />
-     <form onSubmit={handleSubmit}>
-       <div className='form-group'>
-        <label>Full Name</label>
-        <input
+       <Flex maxW={{base:'md', md:'md', lg:'lg'}} wrap={'wrap'} mx={'auto'}>
+       
+    <Heading textAlign={'center'} size={{base:'sm', lg:'lg'}}>Update Supplier</Heading>
+       <FormControl isRequired>
+        <FormLabel>Full Name</FormLabel>
+        <Input
           type="text"
           name="full_name"
           value={supplierDetails.full_name}
           onChange={handleChange}
           required
         />
-      </div>
+      </FormControl>
 
-        <div className='form-group'>
-        <label>Email</label>
-        <input
+        <FormControl isRequired>
+        <FormLabel>Email</FormLabel>
+        <Input
           type="text"
           name="email"
           value={supplierDetails.email}
           onChange={handleChange}
           required
         />
-      </div>
+      </FormControl>
       
       
-      <div className='form-group'>
-        <label>Address</label>
-        <input
+      <FormControl isRequired>
+        <FormLabel>Address</FormLabel>
+        <Input
           type="text"
           name="address"
           value={supplierDetails.address}
           onChange={handleChange}
           required
         />
-      </div>
-      <div className='form-group'>
-        <label>Mobile Number</label>
-        <input
+      </FormControl>
+      <FormControl isRequired>
+        <FormLabel>Mobile Number</FormLabel>
+        <Input
           type="text"
           name="mobile_no"
           value={supplierDetails.mobile_no}
           onChange={handleChange}
           required
         />
-      </div>
-      <button className='btn' type="submit">Save</button>
-    </form>
-    </div>
+      </FormControl>
+      <Button color={'white'} bg={'green.400'} _hover={{bg:'green.600'}} onClick={handleSubmit}  type="submit">Update</Button>
+ 
+    </Flex>
     </>
   )
 }

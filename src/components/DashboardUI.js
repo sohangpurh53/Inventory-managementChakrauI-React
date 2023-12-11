@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/ui.css'
+// import './css/ui.css'
 
 const DashboardInterference = () => {
   return (

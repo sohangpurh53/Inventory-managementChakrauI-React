@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './css/style.css'
+// import './css/style.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Loading from './isLoading';

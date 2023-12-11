@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance';
-import '../css/delete.css'
+// import '../css/delete.css'
 import { useAuth } from '../../context/AuthContext';
 import { Button, Text, Badge, Flex } from '@chakra-ui/react';
 import { IoArrowBackCircleSharp } from "react-icons/io5";

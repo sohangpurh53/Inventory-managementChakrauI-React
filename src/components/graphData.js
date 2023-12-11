@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';
 import axiosInstance from '../utils/axiosInstance';
-import './css/graph.css';
+// import './css/graph.css';
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import Loading from './isLoading';
@@ -138,7 +138,7 @@ const GraphComponent = () => {
     
   }, [accessToken, data]);
 
-  return authenticated &&( isLoading? <Loading />: <Flex mx={'auto'} bg={'#f7f7f7'} maxW={'md'} wrap={'wrap'}  padding={5}><canvas ref={chartRef} width="400" height="400"></canvas></Flex>);
+  return authenticated &&( isLoading? <Loading />: <Flex mx={'auto'} bg={'#f7f7f7'} maxW={{base:'250px', md:'md', lg:'lg'}} wrap={'wrap'}  padding={5}><canvas ref={chartRef} width="400" height="400"></canvas></Flex>);
 };
 
 export default GraphComponent;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import '../css/style.css'
+// import '../css/style.css'
 import Loading from "../isLoading";
 import axiosInstance from "../../utils/axiosInstance";
 import { useAuth } from "../../context/AuthContext";

@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/style.css'
+// import './css/style.css'
 import { Box, Container, Flex, keyframes } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 

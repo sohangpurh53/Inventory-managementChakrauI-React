@@ -7,7 +7,7 @@ import Product from './Product';
 import PurchaseList from './Purchase';
 import StockList from './Stock';
 import OrderItemList from './OrderItem';
-import './css/dashboard.css';
+// import './css/dashboard.css';
 import Table from './table';
 import SuppliersInfo from './suppliersInfo';
 import CategoryList from './Categories';

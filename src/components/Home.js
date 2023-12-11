@@ -4,7 +4,7 @@ import PurchaseList from './Purchase';
 import StockList from './Stock';
 import OrderItemList from './OrderItem';
 import Loading from './isLoading'; // Import the Loading component
-import './css/home.css';
+// import './css/home.css';
 import Table from './table'
 
 
